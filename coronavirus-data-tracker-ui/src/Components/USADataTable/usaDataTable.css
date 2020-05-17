@@ -1,0 +1,43 @@
+.usaDataTable {
+    margin: 100px 100px 0px 125px;
+    overflow: auto;
+    border: 2px solid rgb(200, 200, 200);
+    border-radius: 5px;
+}
+.usaDataTable-header {
+    margin: 0px 0px 0px 375px;
+    padding: 20px 0px 20px 0px;
+}
+.usaDataTable-date-picker-wrapper {
+    float: right
+}
+.usaDataTable-column-header-state {
+    cursor: pointer;
+}
+.usaDataTable-column-header-day {
+    cursor: pointer;
+}
+.usaDataTable-column-header-cases {
+    cursor: pointer;
+}
+.usaDataTable-column-header-deaths {
+    cursor: pointer;
+}
+.usaDataTable-column-header {
+    text-align: center;
+}
+.usaDataTable-loader {
+    position: absolute;
+    left: 45.5%;
+}
+.usaDataTable-table-body {
+    padding: 0px 0px 100px 0px;
+}
+.usaDataTable-total-cases-usa-button {
+    margin: 0px 20px 0px 0px !important;
+    float: right;
+}
+.usaDataTable-total-cases-each-state-button {
+    margin: 0px 20px 0px 10px !important;
+    float: right;
+}

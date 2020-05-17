@@ -1,0 +1,21 @@
+.stateDataTable {
+    margin: 10px 100px 0px 125px;
+    overflow: auto;
+    border: 2px solid rgb(200, 200, 200);
+    border-radius: 5px;
+}
+.stateDataTable-header {
+    margin: 0px 0px 0px 400px;
+    padding: 20px 0px 20px 0px;
+}
+.stateDataTable-column-header {
+    text-align: center;
+}
+.stateDataTable-total-cases-usa-button {
+    margin: 0px 20px 0px 0px !important;
+    float: right;
+}
+.stateDataTable-total-cases-each-state-button {
+    margin: 0px 20px 0px 0px !important;
+    float: right;
+}

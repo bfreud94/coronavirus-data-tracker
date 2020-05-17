@@ -1,0 +1,16 @@
+.stateSelectionHeader {
+    background-color: cadetblue;
+    height: 100px;
+    padding: 15px;
+    font-size: 30px;
+    color: white;
+    text-align: center;
+  }
+.stateSelectionSelect {
+    color: white !important;
+    margin: 0px 0px 0px 10px;
+    font-size: 30px !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif !important;
+}

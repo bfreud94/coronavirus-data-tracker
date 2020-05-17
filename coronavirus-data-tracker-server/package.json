@@ -1,0 +1,21 @@
+{
+  "name": "coronavirus-data-tracker-server",
+  "version": "1.0.0",
+  "description": "Coronavirus Data Tracker",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"cd ..\\coronavirus-data-tracker-ui && npm start\" \"nodemon server.js\""
+  },
+  "author": "Ben Freudman",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "moment": "^2.25.3",
+    "nodemon": "^2.0.3",
+    "novelcovid": "^1.2.7"
+  }
+}
