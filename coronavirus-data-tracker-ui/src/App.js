@@ -38,37 +38,37 @@ class App extends React.Component {
   }
 
   totalDataUSA = async () => {
-    const response = await (await fetch(`http://localhost:8000/coronavirusDataTracker/totalDataUSA`)).json();
+    const response = await (await fetch(`/coronavirusDataTracker/totalDataUSA`)).json();
     return response.map((day) => ({day: day.date.substring(5), cases: day.cases, deaths: day.deaths})).slice(60);
   }
 
   marginalDataUSA = async () => {
-    const response = await (await fetch(`http://localhost:8000/coronavirusDataTracker/marginalDataUSA`)).json();
+    const response = await (await fetch(`/coronavirusDataTracker/marginalDataUSA`)).json();
     return response.map((day) => ({day: day.date.substring(5), cases: day.cases, deaths: day.deaths})).slice(59);
   }
 
   totalDataByState = async (state) => {
-    const response = await (await fetch(`http://localhost:8000/coronavirusDataTracker/totalDataByState/${state}`)).json();
+    const response = await (await fetch(`/coronavirusDataTracker/totalDataByState/${state}`)).json();
     return response.map((day) => ({day: day.date.substring(5), cases: day.cases, deaths: day.deaths})).slice(15);
   }
 
   marginalDataByState = async (state) => {
-    const response = await (await fetch(`http://localhost:8000/coronavirusDataTracker/marginalDataByState/${state}`)).json();
+    const response = await (await fetch(`/coronavirusDataTracker/marginalDataByState/${state}`)).json();
     return response.map((day) => ({day: day.date.substring(5), cases: day.cases, deaths: day.deaths})).slice(15);
   }
 
   totalStatesDataForDay = async (date) => {
-    const response = await (await fetch(`http://localhost:8000/coronavirusDataTracker/totalStatesDataForDay/${date}`)).json();
+    const response = await (await fetch(`/coronavirusDataTracker/totalStatesDataForDay/${date}`)).json();
     return response.map((day) => ({state: day.state, day: day.date.substring(5), cases: day.cases, deaths: day.deaths}));
   }
 
   marginalStatesDataForDay = async (date) => {
-    const response = await (await fetch(`http://localhost:8000/coronavirusDataTracker/marginalStatesDataForDay/${date}`)).json();
+    const response = await (await fetch(`/coronavirusDataTracker/marginalStatesDataForDay/${date}`)).json();
     return response.map((day) => ({state: day.state, day: day.date.substring(5), cases: day.cases, deaths: day.deaths}));
   }
 
   getStates = async () => {
-    const states = await (await fetch(`http://localhost:8000/coronavirusDataTracker/states`)).json();
+    const states = await (await fetch(`/coronavirusDataTracker/states`)).json();
     return states;
   }
 
