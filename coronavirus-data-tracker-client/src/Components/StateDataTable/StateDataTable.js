@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './stateDataTable.css';
 
 export class StateDataTable extends Component {
