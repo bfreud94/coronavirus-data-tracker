@@ -9,7 +9,7 @@ const path = require('path');
 const app = express();
 
 // Port number
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 // Use bodyParser
 app.use(bodyParser.json());
