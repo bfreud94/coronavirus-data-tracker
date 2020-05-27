@@ -4,6 +4,7 @@ const express = require('express');
 const { NovelCovid } = require('novelcovid');
 const moment = require('moment');
 const cors = require('cors');
+const path = require('path');
 
 // Initialize express
 const app = express();
@@ -25,12 +26,12 @@ app.listen(port, () =>  {
     console.log('Server started on port ' + port);
 });
 
-app.get('/coronavirusDataTracker/totalDataUSA', async (request, response) => {
+app.get('/coronavirusDataTracker/api/totalDataUSA', async (request, response) => {
     const data = await novelCovid.nytUSA();
     response.send(data);
 });
 
-app.get('/coronavirusDataTracker/marginalDataUSA', async (request, response) => {
+app.get('/coronavirusDataTracker/api/marginalDataUSA', async (request, response) => {
     const data = await novelCovid.nytUSA();
     let marginalData = [];
     data.map((day, index) => {
@@ -45,7 +46,7 @@ app.get('/coronavirusDataTracker/marginalDataUSA', async (request, response) => 
     response.send(marginalData);
 });
 
-app.get('/coronavirusDataTracker/totalDataByState/:state', async (request, response) =>  {
+app.get('/coronavirusDataTracker/api/totalDataByState/:state', async (request, response) =>  {
     // Get List of States
     const states = await novelCovid.states();
     const listOfStates = states.map((stateData) => stateData.state.toLowerCase());
@@ -55,7 +56,7 @@ app.get('/coronavirusDataTracker/totalDataByState/:state', async (request, respo
     response.send(data);
 });
 
-app.get('/coronavirusDataTracker/marginalDataByState/:state', async (request, response) =>  {
+app.get('/coronavirusDataTracker/api/marginalDataByState/:state', async (request, response) =>  {
     // Get List of States
     const states = await novelCovid.states();
     const listOfStates = states.map((stateData) => stateData.state.toLowerCase());
@@ -74,17 +75,17 @@ app.get('/coronavirusDataTracker/marginalDataByState/:state', async (request, re
     response.send(marginalData);
 });
 
-app.get('/coronavirusDataTracker/casesByCountry', async (request, response) =>  {
+app.get('/coronavirusDataTracker/api/casesByCountry', async (request, response) =>  {
     const data = await novelCovid.historical();
     response.send(data);
 });
 
-app.get('/coronavirusDataTracker/states', async (request, response) =>  {
+app.get('/coronavirusDataTracker/api/states', async (request, response) =>  {
     const states = (await novelCovid.states()).map((state) => state.state);
     response.send(states);
 });
 
-app.get('/coronavirusDataTracker/totalStatesDataForDay/:day', async (request, response) =>  {
+app.get('/coronavirusDataTracker/api/totalStatesDataForDay/:day', async (request, response) =>  {
     // Get List of States
     const states = await novelCovid.states();
     const listOfStates = states.map((stateData) => stateData.state.toLowerCase()).slice(0, 51);
@@ -96,7 +97,7 @@ app.get('/coronavirusDataTracker/totalStatesDataForDay/:day', async (request, re
     response.send(data);
 });
 
-app.get('/coronavirusDataTracker/marginalStatesDataForDay/:date', async (request, response) =>  {
+app.get('/coronavirusDataTracker/api/marginalStatesDataForDay/:date', async (request, response) =>  {
     const states = await novelCovid.states();
     const listOfStates = states.map((stateData) => stateData.state.toLowerCase()).slice(0, 51);
     let data = [];

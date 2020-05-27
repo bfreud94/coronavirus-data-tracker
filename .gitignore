@@ -2,5 +2,5 @@
 .vscode/
 
 # Node Modules
-coronavirus-data-tracker-server/node_modules
+/node_modules
 coronavirus-data-tracker-ui/node_modules
