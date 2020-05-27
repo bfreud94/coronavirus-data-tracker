@@ -1,5 +1,5 @@
 {
-  "name": "coronavirus-data-tracker-ui",
+  "name": "coronavirus-data-tracker-client",
   "version": "1.0.0",
   "private": true,
   "dependencies": {

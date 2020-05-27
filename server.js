@@ -21,6 +21,11 @@ app.use(cors());
 // Use NovelCovid
 const novelCovid = new NovelCovid();
 
+if(process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('coronavirus-data-tracker-client/build'))
+}
+
 // Starting server
 app.listen(port, () =>  {
     console.log('Server started on port ' + port);
