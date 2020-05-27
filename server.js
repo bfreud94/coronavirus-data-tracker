@@ -3,20 +3,16 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const { NovelCovid } = require('novelcovid');
 const moment = require('moment');
-const cors = require('cors');
 const path = require('path');
 
 // Initialize express
 const app = express();
 
 // Port number
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 // Use bodyParser
 app.use(bodyParser.json());
-
-// Use CORS
-app.use(cors());
 
 // Use NovelCovid
 const novelCovid = new NovelCovid();
