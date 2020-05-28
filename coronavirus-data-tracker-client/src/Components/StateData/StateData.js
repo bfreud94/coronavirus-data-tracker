@@ -8,7 +8,8 @@ import StateDataTable from '../StateDataTable/StateDataTable';
 class StateData extends Component {
 
     formatData = () => {
-        const { data } = this.props;
+        let { data } = this.props;
+        data = data.sort((a, b) => a.day > b.day ? 1 : -1);
         return data.filter((day, index) => index % 3 === 0);
     }
 
@@ -17,7 +18,7 @@ class StateData extends Component {
         return (
             <React.Fragment>
                 <StateSelection currentState={currentState} allStates={allStates} onStateSelectChange={onStateSelectChange}/>
-                <SplineChart data={this.formatData()} title={`${title} ${currentState}`}/>
+                <SplineChart data={this.formatData()} title={title}/>
                 <LineChart data={this.formatData()} title={title}/>
                 <BarChart data={this.formatData()} title={title}/>
                 <StateDataTable data={data} title={title}/>

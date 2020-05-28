@@ -4,13 +4,20 @@ import '../../bootstrap.min.css';
 import './stateDataTable.css';
 
 export class StateDataTable extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: {}
+        }
+    }
 
     tableHeader = () => {
         return (
             <tr className="stateDataTable-column-header">
-                <th>Day</th>
-                <th>Cases</th>
-                <th>Deaths</th>
+                <th className="stateDataTable-column-header-day" title="day" onClick={this.sortByColumn}>Day</th>
+                <th className="stateDataTable-column-header-cases" title="cases" onClick={this.sortByColumn}>Cases</th>
+                <th className="stateDataTable-column-header-deaths" title="deaths" onClick={this.sortByColumn}>Deaths</th>
             </tr>
         );
     }
@@ -32,6 +39,24 @@ export class StateDataTable extends Component {
                 {tableData}
             </React.Fragment>
         );
+    }
+
+    sortByColumn = (e) => {
+        let sortedData = [];
+        let sortBy = e.currentTarget === undefined ? e : e.currentTarget.title;
+        const dataToSort = this.state.data.length > 0 ? this.state.data : this.props.data;
+        let isReverse = false;
+        if(dataToSort !== undefined && dataToSort.length > 0) {
+            if(sortBy === 'day') {
+                isReverse = dataToSort[0][sortBy].substring(0, 2) !== '03';
+            } else {
+                isReverse = dataToSort[0][sortBy] > dataToSort[dataToSort.length - 1][sortBy];
+            }
+            sortedData = isReverse ? dataToSort.sort((a, b) => a[sortBy] < b[sortBy] ? -1 : 1) : dataToSort.sort((a, b) => a[sortBy] < b[sortBy] ? 1 : -1);
+            this.setState({
+                data: sortedData
+            });
+        }
     }
 
     render() {

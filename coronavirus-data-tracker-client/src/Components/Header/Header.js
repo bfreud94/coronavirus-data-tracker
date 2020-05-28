@@ -21,6 +21,7 @@ const linkStyle = {
     color: '#ffffff',
     fontSize: '16px',
     textDecoration: 'none',
+    cursor: 'pointer'
 }
 
 export default Header;

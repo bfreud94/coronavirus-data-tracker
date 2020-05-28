@@ -2,7 +2,6 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { Chart, ArgumentAxis, ValueAxis, LineSeries, Title, Legend } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
-import Loader from 'react-loader-spinner';
 import './lineChart.css';
 
 const legendStyles = () => ({
@@ -83,7 +82,7 @@ class LineChart extends React.Component {
                             <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label}/>
                             <Title text={title} textComponent={TitleText}/>
                         </Chart>
-                    : <Loader className="lineChart-loader" type="TailSpin" color="blue"/>}
+                    : ''}
                 </Paper>
             </div>
         );

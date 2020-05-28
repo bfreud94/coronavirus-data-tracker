@@ -94,10 +94,10 @@ class App extends React.Component {
             <USAData data={marginalDataUSA} statesDataForDay={marginalStatesDataForDay} title={`Marginal Coronavirus`} marginalStatesDataForDay={this.marginalStatesDataForDay}/>
           )}/>
           <Route exact path="/totalStateData" render={props => (
-            <StateData currentState={currentState} allStates={allStates} onStateSelectChange={this.onStateSelectChange} data={totalStateData} title={`Total Coronavirus Cases vs Deaths in `}/>
+            <StateData currentState={currentState} allStates={allStates} onStateSelectChange={this.onStateSelectChange} data={totalStateData} title={`Total Coronavirus Cases vs Deaths in ${currentState}`}/>
           )}/>
           <Route exact path="/marginalStateData" render={props => (
-            <StateData currentState={currentState} allStates={allStates} onStateSelectChange={this.onStateSelectChange} data={marginalStateData} title={`Marginal Coronavirus Cases vs Deaths in`}/>
+            <StateData currentState={currentState} allStates={allStates} onStateSelectChange={this.onStateSelectChange} data={marginalStateData} title={`Marginal Coronavirus Cases vs Deaths in ${currentState}`}/>
           )}/>
         </Provider>
       </Router>

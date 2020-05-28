@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper';
 import { Chart, ArgumentAxis, ValueAxis, BarSeries, Title, Legend } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import { Stack } from '@devexpress/dx-react-chart';
-import Loader from 'react-loader-spinner';
 import './barChart.css';
 
 const legendStyles = () => ({
@@ -49,7 +48,7 @@ class BarChart extends React.Component {
                             <Title text={title} />
                             <Stack/>
                         </Chart>
-                    : <Loader className="barChart-loader" type="TailSpin" color="blue"/>}
+                    : ''}
                 </Paper>
             </div>
         );

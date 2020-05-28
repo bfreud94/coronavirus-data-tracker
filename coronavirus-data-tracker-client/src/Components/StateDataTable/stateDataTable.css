@@ -11,6 +11,15 @@
 .stateDataTable-column-header {
     text-align: center;
 }
+.stateDataTable-column-header-day {
+    cursor: pointer;
+}
+.stateDataTable-column-header-cases {
+    cursor: pointer;
+}
+.stateDataTable-column-header-deaths {
+    cursor: pointer;
+}
 .stateDataTable-total-cases-usa-button {
     margin: 0px 20px 0px 0px !important;
     float: right;

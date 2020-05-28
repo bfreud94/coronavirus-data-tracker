@@ -98,20 +98,22 @@ export class USADataTable extends Component {
 
     sortByColumn = (e) => {
         let sortedData = [];
-        let sortBy = e.currentTarget.title;
+        let sortBy = e.currentTarget === undefined ? e : e.currentTarget.title;
         const dataToSort = this.state.data.length > 0 ? this.state.data : this.props.data;
         let isReverse = false;
-        if(sortBy === 'state') {
-            isReverse = dataToSort[0][sortBy].charAt(0) === 'A';
-        } else if(sortBy === 'day') {
-            isReverse = dataToSort[0][sortBy].substring(0, 2) === '03';
-        } else {
-            isReverse = dataToSort[10][sortBy] > dataToSort[11][sortBy];
+        if(dataToSort !== undefined && dataToSort.length > 0) {
+            if(sortBy === 'state') {
+                isReverse = dataToSort[0][sortBy].charAt(0) !== 'A';
+            } else if(sortBy === 'day') {
+                isReverse = dataToSort[0][sortBy].substring(0, 2) !== '03';
+            } else {
+                isReverse = dataToSort[0][sortBy] > dataToSort[dataToSort.length - 1][sortBy];
+            }
+            sortedData = isReverse ? dataToSort.sort((a, b) => a[sortBy] < b[sortBy] ? -1 : 1) : dataToSort.sort((a, b) => a[sortBy] < b[sortBy] ? 1 : -1);
+            this.setState({
+                data: sortedData
+            });
         }
-        sortedData = isReverse ? dataToSort.sort((a, b) => a[sortBy] < b[sortBy] ? -1 : 1) : dataToSort.sort((a, b) => a[sortBy] < b[sortBy] ? 1 : -1);
-        this.setState({
-            data: sortedData
-        });
     }
 
     handleDateChange = async (date) => {
