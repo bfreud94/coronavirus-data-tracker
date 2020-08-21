@@ -1,9 +1,9 @@
 // Imports for external dependencies
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const express = require('express');
 const { NovelCovid } = require('novelcovid');
 const moment = require('moment');
-const path = require('path');
 
 // Initialize express
 const app = express();
@@ -21,6 +21,11 @@ const novelCovid = new NovelCovid();
 if(process.env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static('coronavirus-data-tracker-client/build'));
+}
+
+// Use CORS if running locally
+if(process.env.NODE_ENV.trim() === 'development') {
+    app.use(cors());
 }
 
 // Starting server
