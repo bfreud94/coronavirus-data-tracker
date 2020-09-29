@@ -1,0 +1,9 @@
+.splineChart-loader {
+    position: absolute;
+    left: 45.5%;
+    top: 45%;
+}
+.splineChart-wrapper {
+    margin: 0px 100px 100px 100px;
+    overflow: auto;
+}

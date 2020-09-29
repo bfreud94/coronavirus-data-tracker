@@ -6,17 +6,17 @@ import USADataTable from '../USADataTable/USADataTable';
 
 class USAData extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             totalStatesDataIsVisible: true
-        }
+        };
     }
 
     formatData = () => {
         let { data } = this.props;
-        if(data !== undefined && data.length > 0)  {
-            if(data[0].cases > data[1].cases) {
+        if (data !== undefined && data.length > 0) {
+            if (data[0].cases > data[1].cases) {
                 data = data.reverse();
             }
         }
@@ -25,7 +25,7 @@ class USAData extends Component {
 
     onHeaderButtonClick = (e) => {
         this.setState({
-            totalStatesDataIsVisible: e.currentTarget.name.includes("State")
+            totalStatesDataIsVisible: e.currentTarget.name.includes('State')
         });
     }
 
@@ -34,11 +34,11 @@ class USAData extends Component {
         const { totalStatesDataIsVisible } = this.state;
         return (
             <React.Fragment>
-                <SplineChart data={this.formatData()} title={title + ' Cases vs. Deaths'}/>
-                <LineChart data={this.formatData()} title={title + ' Cases vs. Deaths'}/>
-                <BarChart data={this.formatData()} title={title + ' Cases vs. Deaths'}/>
-                <USADataTable data={statesDataForDay} isVisible={totalStatesDataIsVisible} title={title + ' Data for all States'} onHeaderButtonClick={this.onHeaderButtonClick} marginalStatesDataForDay={marginalStatesDataForDay}/>
-                <USADataTable data={data} isVisible={!totalStatesDataIsVisible} title={title + ' Data for all Days'} onHeaderButtonClick={this.onHeaderButtonClick}/>
+                <SplineChart data={this.formatData()} title={title + ' Cases vs. Deaths'} />
+                <LineChart data={this.formatData()} title={title + ' Cases vs. Deaths'} />
+                <BarChart data={this.formatData()} title={title + ' Cases vs. Deaths'} />
+                <USADataTable data={statesDataForDay} isVisible={totalStatesDataIsVisible} title={title + ' Data for all States'} onHeaderButtonClick={this.onHeaderButtonClick} marginalStatesDataForDay={marginalStatesDataForDay} />
+                <USADataTable data={data} isVisible={!totalStatesDataIsVisible} title={title + ' Data for all Days'} onHeaderButtonClick={this.onHeaderButtonClick} />
             </React.Fragment>
         );
     }

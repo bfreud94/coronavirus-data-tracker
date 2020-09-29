@@ -3,3 +3,7 @@
     left: 45.5%;
     top: 40%;
 }
+.lineChart-wrapper {
+    margin: 100px;
+    overflow: auto;
+}

@@ -13,12 +13,18 @@
   "author": "Ben Freudman",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
     "concurrently": "^5.2.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "helmet": "^4.1.1",
     "moment": "^2.25.3",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.3",
-    "novelcovid": "^1.2.7"
+    "novelcovid": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1"
   }
 }

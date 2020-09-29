@@ -3,14 +3,14 @@ import Paper from '@material-ui/core/Paper';
 import { Chart, ArgumentAxis, ValueAxis, BarSeries, Title, Legend } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import { Stack } from '@devexpress/dx-react-chart';
-import './barChart.css';
+import './BarChart.css';
 
 const legendStyles = () => ({
     root: {
         display: 'flex',
         margin: 'auto',
-        flexDirection: 'row',
-    },
+        flexDirection: 'row'
+    }
 });
 
 const legendRootBase = ({ classes, ...restProps }) => (
@@ -21,8 +21,8 @@ const Root = withStyles(legendStyles, { name: 'LegendRoot' })(legendRootBase);
 
 const legendLabelStyles = () => ({
     label: {
-        whiteSpace: 'nowrap',
-    },
+        whiteSpace: 'nowrap'
+    }
 });
 
 const legendLabelBase = ({ classes, ...restProps }) => (
@@ -36,18 +36,20 @@ class BarChart extends React.Component {
     render() {
         const { data, title } = this.props;
         return (
-            <div style={{margin: '0px 100px 200px 100px', overflow: 'auto'}}>
+            <div className='barChart-wrapper'>
                 <Paper>
-                    {data.length > 0 ?
+                    {data.length > 0
+                    ? (
                         <Chart data={data}>
                             <ArgumentAxis />
                             <ValueAxis />
-                            <BarSeries name="Cases" valueField="cases" argumentField="day"/>
-                            <BarSeries name="Deaths" valueField="deaths" argumentField="day"/>
-                            <Legend position="bottom" rootComponent={Root} labelComponent={Label} />
+                            <BarSeries name='Cases' valueField='cases' argumentField='day' />
+                            <BarSeries name='Deaths' valueField='deaths' argumentField='day' />
+                            <Legend position='bottom' rootComponent={Root} labelComponent={Label} />
                             <Title text={title} />
-                            <Stack/>
+                            <Stack />
                         </Chart>
+                    )
                     : ''}
                 </Paper>
             </div>

@@ -4,3 +4,6 @@
 # Node Modules
 /node_modules
 coronavirus-data-tracker-client/node_modules
+
+# ESLint Files
+**/.eslintrc.json

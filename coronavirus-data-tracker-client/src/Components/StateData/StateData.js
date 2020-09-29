@@ -9,19 +9,19 @@ class StateData extends Component {
 
     formatData = () => {
         let { data } = this.props;
-        data = data.sort((a, b) => a.day > b.day ? 1 : -1);
-        return data.filter((day, index) => index % 3 === 0);
+        data = data.sort((a, b) => (a.day > b.day ? 1 : -1));
+        return data;
     }
 
     render() {
         const { data, title, currentState, allStates, onStateSelectChange } = this.props;
         return (
             <React.Fragment>
-                <StateSelection currentState={currentState} allStates={allStates} onStateSelectChange={onStateSelectChange}/>
-                <SplineChart data={this.formatData()} title={title}/>
-                <LineChart data={this.formatData()} title={title}/>
-                <BarChart data={this.formatData()} title={title}/>
-                <StateDataTable data={data} title={title}/>
+                <StateSelection currentState={currentState} allStates={allStates} onStateSelectChange={onStateSelectChange} />
+                <SplineChart data={this.formatData()} title={title} />
+                <LineChart data={this.formatData()} title={title} />
+                <BarChart data={this.formatData()} title={title} />
+                <StateDataTable data={data} title={title} />
             </React.Fragment>
         );
     }
