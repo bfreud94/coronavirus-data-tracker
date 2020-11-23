@@ -41,17 +41,17 @@ class App extends React.Component {
 
     totalDataUSA = async () => {
         const response = await (await fetch(`${serverUri}/coronavirusDataTracker/api/totalDataUSA`)).json();
-        return _.takeRight(response.map((day) => ({ day: day.date.substring(5), cases: day.cases, deaths: day.deaths })), 120);
+        return _.takeRight(response.map((day) => ({ day: day.date.substring(5), cases: day.cases, deaths: day.deaths })), 240);
     }
 
     marginalDataUSA = async () => {
         const response = await (await fetch(`${serverUri}/coronavirusDataTracker/api/marginalDataUSA`)).json();
-        return _.takeRight(response.map((day) => ({ day: day.date.substring(5), cases: day.cases, deaths: day.deaths })), 120);
+        return _.takeRight(response.map((day) => ({ day: day.date.substring(5), cases: day.cases, deaths: day.deaths })), 240);
     }
 
     totalDataByState = async (state) => {
         const response = await (await fetch(`${serverUri}/coronavirusDataTracker/api/totalDataByState/${state}`)).json();
-        return _.takeRight(response.map((day) => ({ day: day.date.substring(5), cases: day.cases, deaths: day.deaths })), 120);
+        return _.takeRight(response.map((day) => ({ day: day.date.substring(5), cases: day.cases, deaths: day.deaths })), 240);
     }
 
     marginalDataByState = async (state) => {

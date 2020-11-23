@@ -7,3 +7,6 @@ coronavirus-data-tracker-client/node_modules
 
 # ESLint Files
 **/.eslintrc.json
+
+# Build Folder
+**/build

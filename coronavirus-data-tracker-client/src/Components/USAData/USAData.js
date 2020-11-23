@@ -15,12 +15,7 @@ class USAData extends Component {
 
     formatData = () => {
         let { data } = this.props;
-        if (data !== undefined && data.length > 0) {
-            if (data[0].cases > data[1].cases) {
-                data = data.reverse();
-            }
-        }
-        return data.filter((day, index) => index % 3 === 0);
+        return data.filter((day, index) => index % 7 === 0);
     }
 
     onHeaderButtonClick = (e) => {
