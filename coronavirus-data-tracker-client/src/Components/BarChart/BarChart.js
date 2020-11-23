@@ -1,15 +1,21 @@
 import * as React from 'react';
-import Paper from '@material-ui/core/Paper';
-import { Chart, ArgumentAxis, ValueAxis, BarSeries, Title, Legend } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, ArgumentAxis, ValueAxis, BarSeries, Legend } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import { Stack } from '@devexpress/dx-react-chart';
 import './BarChart.css';
 
+const barChartStyles = () => ({
+    chart: {
+        paddingRight: '20px',
+        width: '2000px'
+    }
+});
+
 const legendStyles = () => ({
     root: {
         display: 'flex',
-        margin: 'auto',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        margin: 'auto'
     }
 });
 
@@ -34,27 +40,25 @@ const Label = withStyles(legendLabelStyles, { name: 'LegendLabel' })(legendLabel
 class BarChart extends React.Component {
 
     render() {
-        const { data, title } = this.props;
+        const { classes, data, title } = this.props;
         return (
             <div className='barChart-wrapper'>
-                <Paper>
-                    {data.length > 0
-                    ? (
-                        <Chart data={data}>
-                            <ArgumentAxis />
-                            <ValueAxis />
-                            <BarSeries name='Cases' valueField='cases' argumentField='day' />
-                            <BarSeries name='Deaths' valueField='deaths' argumentField='day' />
-                            <Legend position='bottom' rootComponent={Root} labelComponent={Label} />
-                            <Title text={title} />
-                            <Stack />
-                        </Chart>
-                    )
-                    : ''}
-                </Paper>
+                <h3 className='barChart-title'>{title}</h3>
+                {data.length > 0
+                ? (
+                    <Chart data={data} className={classes.chart}>
+                        <ArgumentAxis />
+                        <ValueAxis />
+                        <BarSeries name='Cases' valueField='cases' argumentField='day' />
+                        <BarSeries name='Deaths' valueField='deaths' argumentField='day' />
+                        <Legend position='bottom' rootComponent={Root} labelComponent={Label} />
+                        <Stack />
+                    </Chart>
+                )
+                : ''}
             </div>
         );
     }
 }
 
-export default BarChart;
+export default withStyles(barChartStyles)(BarChart);

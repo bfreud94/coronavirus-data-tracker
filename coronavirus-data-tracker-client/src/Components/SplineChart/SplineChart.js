@@ -1,9 +1,9 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import { Chart, ArgumentAxis, ValueAxis, AreaSeries, Title, Legend } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, ArgumentAxis, ValueAxis, AreaSeries, Legend } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import { curveCatmullRom, area } from 'd3-shape';
 import Loader from 'react-loader-spinner';
+// import store from '../../store';
 import './SplineChart.css';
 
 const legendStyles = () => ({
@@ -34,7 +34,8 @@ const Label = withStyles(legendLabelStyles, { name: 'LegendLabel' })(legendLabel
 
 const splineChartStyles = () => ({
     chart: {
-        paddingRight: '20px'
+        paddingRight: '20px',
+        width: '2000px'
     }
 });
 
@@ -56,7 +57,7 @@ class SplineChart extends React.Component {
         const { classes, data, title } = this.props;
         return (
             <div className='splineChart-wrapper'>
-                <Paper>
+                <h3 className='splineChart-title'>{title}</h3>
                     {data.length > 0
                         ? (
                         <Chart data={data} className={classes.chart}>
@@ -65,11 +66,9 @@ class SplineChart extends React.Component {
                             <AreaSeries name='Cases' valueField='cases' argumentField='day' seriesComponent={Area} />
                             <AreaSeries name='Deaths' valueField='deaths' argumentField='day' seriesComponent={Area} />
                             <Legend position='bottom' rootComponent={Root} labelComponent={Label} />
-                            <Title text={title} />
                         </Chart>
                     )
                     : <Loader className='splineChart-loader' type='TailSpin' color='blue' /> }
-                </Paper>
             </div>
         );
     }

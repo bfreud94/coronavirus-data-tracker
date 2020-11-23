@@ -1,14 +1,13 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import { Chart, ArgumentAxis, ValueAxis, LineSeries, Title, Legend } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, ArgumentAxis, ValueAxis, LineSeries, Legend } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import './LineChart.css';
 
 const legendStyles = () => ({
     root: {
         display: 'flex',
-        margin: 'auto',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        margin: 'auto'
     }
 });
 
@@ -43,10 +42,8 @@ const Item = withStyles(legendItemStyles, { name: 'LegendItem' })(legendItemBase
 
 const lineChartStyles = () => ({
     chart: {
-        paddingRight: '20px'
-    },
-    title: {
-        whiteSpace: 'pre'
+        paddingRight: '20px',
+        width: '2000px'
     }
 });
 
@@ -57,35 +54,23 @@ const ValueLabel = (props) => {
     );
 };
 
-const titleStyles = {
-    title: {
-        whiteSpace: 'pre'
-    }
-};
-
-const TitleText = withStyles(titleStyles)(({ classes, ...props }) => (
-    <Title.Text {...props} className={classes.title} />
-));
-
 class LineChart extends React.Component {
     render() {
         const { classes, data, title } = this.props;
         return (
             <div className='lineChart-wrapper'>
-                <Paper>
-                    {data.length > 0
-                        ? (
-                        <Chart data={data} className={classes.chart}>
-                            <ArgumentAxis />
-                            <ValueAxis max={50} labelComponent={ValueLabel} />
-                            <LineSeries name='Cases' valueField='cases' argumentField='day' />
-                            <LineSeries name='Deaths' valueField='deaths' argumentField='day' />
-                            <Legend position='bottom' rootComponent={Root} itemComponent={Item} labelComponent={Label} />
-                            <Title text={title} textComponent={TitleText} />
-                        </Chart>
-                        )
-                    : ''}
-                </Paper>
+                <h3 className='lineChart-title'>{title}</h3>
+                {data.length > 0
+                    ? (
+                    <Chart data={data} className={classes.chart}>
+                        <ArgumentAxis />
+                        <ValueAxis max={50} labelComponent={ValueLabel} />
+                        <LineSeries name='Cases' valueField='cases' argumentField='day' />
+                        <LineSeries name='Deaths' valueField='deaths' argumentField='day' />
+                        <Legend position='bottom' rootComponent={Root} itemComponent={Item} labelComponent={Label} />
+                    </Chart>
+                    )
+                : ''}
             </div>
         );
     }
