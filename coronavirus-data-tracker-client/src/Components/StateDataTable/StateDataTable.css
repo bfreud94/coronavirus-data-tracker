@@ -11,7 +11,7 @@
 .stateDataTable-column-header {
     text-align: center;
 }
-.stateDataTable-column-header-day {
+.stateDataTable-column-header-date {
     cursor: pointer;
 }
 .stateDataTable-column-header-cases {

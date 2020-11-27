@@ -5,7 +5,7 @@ import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { withStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { getMarginalStatesDataForDay } from '../../actions/dataActions';
+import { getMarginalStatesDataForDate } from '../../actions/dataActions';
 import { changeDate } from '../../actions/dateActions';
 import 'date-fns';
 import moment from 'moment';
@@ -53,37 +53,25 @@ export class USADataTable extends Component {
         const isStatesDataTable = title.includes('States');
         return (
             <tr className='usaDataTable-column-header'>
-                {isStatesDataTable ? <th title='state' className='usaDataTable-column-header-state' onClick={this.sortByColumn}>State</th> : <th title='day' className='usaDataTable-column-header-day' onClick={this.sortByColumn}>Day</th>}
+                {isStatesDataTable ? <th title='state' className='usaDataTable-column-header-state' onClick={this.sortByColumn}>State</th> : <th title='date' className='usaDataTable-column-header-date' onClick={this.sortByColumn}>Date</th>}
                 <th title='cases' className='usaDataTable-column-header-cases' onClick={this.sortByColumn}>Cases</th>
                 <th title='deaths' className='usaDataTable-column-header-deaths' onClick={this.sortByColumn}>Deaths</th>
             </tr>
         );
     }
 
-    // Change function name
-    // Change 'day' to 'date' everywhere (including APIs)
     tableData = () => {
         const { title } = this.props;
-        // const { date } = this.state;
         const data = this.props.tableData;
-        // Make call to getUpdatedData function
-        /*
-        let data = [];
-        if (title.includes('Total')) {
-            data = this.state.data.length === 0 ? this.props.tableData : this.state.data;
-        } else {
-            data = this.state.data.length === 0 ? this.props.tableData[date] : this.state.data;
-        }
-        */
         const isStatesDataTable = title.includes('States');
         const tableDataElements = [];
         if (Array.isArray(data)) {
-            data.forEach((day, index) => {
+            data.forEach((date, index) => {
                 tableDataElements.push(
                     <tr className='usaDataTable-column-header' key={index}>
-                        <td>{isStatesDataTable ? day.state : day.day}</td>
-                        <td>{day.cases}</td>
-                        <td>{day.deaths}</td>
+                        <td>{isStatesDataTable ? date.state : date.date}</td>
+                        <td>{date.cases}</td>
+                        <td>{date.deaths}</td>
                     </tr>
                 );
             });
@@ -120,10 +108,10 @@ export class USADataTable extends Component {
         if (dataToSort !== undefined && dataToSort.length > 0) {
             if (sortBy === 'state') {
                 isReverse = dataToSort[0][sortBy].charAt(0) !== 'A';
-            } else if (sortBy === 'day') {
-                const firstDay = parseInt(dataToSort[0][sortBy].substring(0, 2));
-                const lastDay = parseInt(dataToSort[dataToSort.length - 1][sortBy].substring(0, 2));
-                isReverse = firstDay > lastDay;
+            } else if (sortBy === 'date') {
+                const firstDate = parseInt(dataToSort[0][sortBy].substring(0, 2));
+                const lastDate = parseInt(dataToSort[dataToSort.length - 1][sortBy].substring(0, 2));
+                isReverse = firstDate > lastDate;
             } else {
                 isReverse = dataToSort[0][sortBy] > dataToSort[dataToSort.length - 1][sortBy];
             }
@@ -137,7 +125,7 @@ export class USADataTable extends Component {
     handleDateChange = (date) => {
         if (moment().diff(moment(date), 'days') > 29) date = moment().subtract(29, 'days');
         if (moment(date).isAfter(moment())) date = moment().subtract(1, 'days');
-        this.props.getMarginalStatesDataForDay(moment(date).format('YYYY-MM-DD'));
+        this.props.getMarginalStatesDataForDate(moment(date).format('YYYY-MM-DD'));
         this.props.changeDate(moment(date).format('YYYY-MM-DD'));
         this.setState({
             data: []
@@ -194,8 +182,8 @@ const mapStateToProps = (state) => ({
 });
 
 USADataTable.propTypes = {
-    getMarginalStatesDataForDay: PropTypes.func.isRequired,
+    getMarginalStatesDataForDate: PropTypes.func.isRequired,
     changeDate: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { getMarginalStatesDataForDay, changeDate })(withStyles(styles)(USADataTable));
+export default connect(mapStateToProps, { getMarginalStatesDataForDate, changeDate })(withStyles(styles)(USADataTable));

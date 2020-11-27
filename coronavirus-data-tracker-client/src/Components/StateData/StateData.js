@@ -21,7 +21,7 @@ class StateData extends Component {
         const { title } = this.props;
         const { currentState } = store.getState().stateData;
         let data = title.includes('Total') ? store.getState().data.totalStateData[currentState] : store.getState().data.marginalStateData[currentState];
-        data = data.sort((a, b) => (a.day > b.day ? 1 : -1));
+        data = data.sort((a, b) => (a.date > b.date ? 1 : -1));
         return data;
     }
 

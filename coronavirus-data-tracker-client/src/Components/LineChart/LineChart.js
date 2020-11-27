@@ -65,8 +65,8 @@ class LineChart extends React.Component {
                     <Chart data={data} className={classes.chart}>
                         <ArgumentAxis />
                         <ValueAxis max={50} labelComponent={ValueLabel} />
-                        <LineSeries name='Cases' valueField='cases' argumentField='day' />
-                        <LineSeries name='Deaths' valueField='deaths' argumentField='day' />
+                        <LineSeries name='Cases' valueField='cases' argumentField='date' />
+                        <LineSeries name='Deaths' valueField='deaths' argumentField='date' />
                         <Legend position='bottom' rootComponent={Root} itemComponent={Item} labelComponent={Label} />
                     </Chart>
                     )

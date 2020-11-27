@@ -49,8 +49,8 @@ class BarChart extends React.Component {
                     <Chart data={data} className={classes.chart}>
                         <ArgumentAxis />
                         <ValueAxis />
-                        <BarSeries name='Cases' valueField='cases' argumentField='day' />
-                        <BarSeries name='Deaths' valueField='deaths' argumentField='day' />
+                        <BarSeries name='Cases' valueField='cases' argumentField='date' />
+                        <BarSeries name='Deaths' valueField='deaths' argumentField='date' />
                         <Legend position='bottom' rootComponent={Root} labelComponent={Label} />
                         <Stack />
                     </Chart>

@@ -13,22 +13,22 @@ class StateDataTable extends Component {
     }
 
     tableHeader = () => (
-        <tr className="stateDataTable-column-header">
-            <th className="stateDataTable-column-header-day" title="day" onClick={this.sortByColumn}>Day</th>
-            <th className="stateDataTable-column-header-cases" title="cases" onClick={this.sortByColumn}>Cases</th>
-            <th className="stateDataTable-column-header-deaths" title="deaths" onClick={this.sortByColumn}>Deaths</th>
+        <tr className='stateDataTable-column-header'>
+            <th className='stateDataTable-column-header-date' title='date' onClick={this.sortByColumn}>Date</th>
+            <th className='stateDataTable-column-header-cases' title='cases' onClick={this.sortByColumn}>Cases</th>
+            <th className='stateDataTable-column-header-deaths' title='deaths' onClick={this.sortByColumn}>Deaths</th>
         </tr>
     );
 
     tableData = () => {
         const { data } = this.props;
         const tableData = [];
-        data.forEach((day, index) => {
+        data.forEach((date, index) => {
             tableData.push(
-                <tr className="stateDataTable-column-header" key={index}>
-                    <td>{day.day}</td>
-                    <td>{day.cases}</td>
-                    <td>{day.deaths}</td>
+                <tr className='stateDataTable-column-header' key={index}>
+                    <td>{date.date}</td>
+                    <td>{date.cases}</td>
+                    <td>{date.deaths}</td>
                 </tr>
             );
         });
@@ -45,7 +45,7 @@ class StateDataTable extends Component {
         const dataToSort = this.state.data.length > 0 ? this.state.data : this.props.data;
         let isReverse = false;
         if (dataToSort !== undefined && dataToSort.length > 0) {
-            if (sortBy === 'day') {
+            if (sortBy === 'date') {
                 isReverse = parseInt(dataToSort[0][sortBy].substring(0, 2)) > parseInt(dataToSort[dataToSort.length - 1][sortBy].substring(0, 2));
             } else {
                 isReverse = dataToSort[0][sortBy] > dataToSort[dataToSort.length - 1][sortBy];
@@ -60,8 +60,8 @@ class StateDataTable extends Component {
     render() {
         const { title } = this.props;
         return (
-            <div className="stateDataTable">
-                <h3 className="stateDataTable-header">
+            <div className='stateDataTable'>
+                <h3 className='stateDataTable-header'>
                     <span>{title}</span>
                 </h3>
                 <MDBTable>

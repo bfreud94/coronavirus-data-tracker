@@ -63,8 +63,8 @@ class SplineChart extends React.Component {
                         <Chart data={data} className={classes.chart}>
                             <ArgumentAxis tickFormat={format} />
                             <ValueAxis />
-                            <AreaSeries name='Cases' valueField='cases' argumentField='day' seriesComponent={Area} />
-                            <AreaSeries name='Deaths' valueField='deaths' argumentField='day' seriesComponent={Area} />
+                            <AreaSeries name='Cases' valueField='cases' argumentField='date' seriesComponent={Area} />
+                            <AreaSeries name='Deaths' valueField='deaths' argumentField='date' seriesComponent={Area} />
                             <Legend position='bottom' rootComponent={Root} labelComponent={Label} />
                         </Chart>
                     )

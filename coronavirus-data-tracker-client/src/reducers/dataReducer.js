@@ -1,11 +1,11 @@
-import { GET_MARGINAL_STATES_DATA_FOR_DAY, GET_MARGINAL_DATA_USA, GET_TOTAL_STATES_DATA_FOR_DAY, GET_TOTAL_USA_DATA, GET_TOTAL_STATE_DATA, GET_MARGINAL_STATE_DATA } from '../actions/types';
+import { GET_MARGINAL_STATES_DATA_FOR_DATE, GET_MARGINAL_DATA_USA, GET_TOTAL_STATES_DATA_FOR_DATE, GET_TOTAL_USA_DATA, GET_TOTAL_STATE_DATA, GET_MARGINAL_STATE_DATA } from '../actions/types';
 import { getStates } from '../util/util';
 
 const initialState = {
     totalDataUSA: [],
     marginalDataUSA: [],
-    totalStatesDataForDay: {},
-    marginalStatesDataForDay: {},
+    totalStatesDataForDate: {},
+    marginalStatesDataForDate: {},
     totalStateData: getStates(),
     marginalStateData: getStates()
 };
@@ -20,34 +20,34 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case GET_TOTAL_USA_DATA:
-            if (state.totalDataUSA.length === 0) action.payload.forEach((day) => state.totalStatesDataForDay[day.day] = []);
+            if (state.totalDataUSA.length === 0) action.payload.forEach((date) => state.totalStatesDataForDate[date.date] = []);
             return {
                 ...state,
                 totalDataUSA: action.payload,
-                totalStatesDataForDay: state.totalStatesDataForDay
+                totalStatesDataForDate: state.totalStatesDataForDate
             };
         case GET_MARGINAL_DATA_USA:
-            if (state.marginalDataUSA.length === 0) action.payload.forEach((day) => state.marginalStatesDataForDay[day.day] = []);
+            if (state.marginalDataUSA.length === 0) action.payload.forEach((date) => state.marginalStatesDataForDate[date.date] = []);
             return {
                 ...state,
                 marginalDataUSA: action.payload,
-                marginalStatesDataForDay: state.marginalStatesDataForDay
+                marginalStatesDataForDate: state.marginalStatesDataForDate
             };
-        case GET_TOTAL_STATES_DATA_FOR_DAY:
-            Object.keys(state.totalStatesDataForDay).forEach((day) => {
-                if (day.toString() === action.payload[0].day.toString()) state.totalStatesDataForDay[day] = action.payload
+        case GET_TOTAL_STATES_DATA_FOR_DATE:
+            Object.keys(state.totalStatesDataForDate).forEach((date) => {
+                if (date.toString() === action.payload[0].date.toString()) state.totalStatesDataForDate[date] = action.payload
             });
             return {
                 ...state,
-                totalStatesDataForDay: state.totalStatesDataForDay
+                totalStatesDataForDate: state.totalStatesDataForDate
             };
-        case GET_MARGINAL_STATES_DATA_FOR_DAY:
-            Object.keys(state.marginalStatesDataForDay).forEach((day) => {
-                if (day.toString() === action.payload[0].day.toString()) state.marginalStatesDataForDay[day] = action.payload
+        case GET_MARGINAL_STATES_DATA_FOR_DATE:
+            Object.keys(state.marginalStatesDataForDate).forEach((date) => {
+                if (date.toString() === action.payload[0].date.toString()) state.marginalStatesDataForDate[date] = action.payload
             });
             return {
                 ...state,
-                marginalStatesDataForDay: state.marginalStatesDataForDay
+                marginalStatesDataForDate: state.marginalStatesDataForDate
             };
         case GET_TOTAL_STATE_DATA: {
             const { stateName, data } = action.payload;

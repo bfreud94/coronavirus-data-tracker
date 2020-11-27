@@ -70,15 +70,6 @@ router.get('/marginalDataByState/:state', async (request, response, next) => {
     }
 });
 
-router.get('/casesByCountry', async (request, response, next) => {
-    try {
-        const data = await novelCovid.historical.all();
-        response.send(data);
-    } catch (error) {
-        next(error);
-    }
-});
-
 router.get('/states', async (request, response, next) => {
     try {
         const states = (await novelCovid.states()).map((state) => state.state);
@@ -88,7 +79,7 @@ router.get('/states', async (request, response, next) => {
     }
 });
 
-router.get('/totalStatesDataForDay/:day', async (request, response, next) => {
+router.get('/totalStatesDataForDate/:day', async (request, response, next) => {
     try {
         // Get List of States
         const states = await novelCovid.states();
@@ -104,7 +95,7 @@ router.get('/totalStatesDataForDay/:day', async (request, response, next) => {
     }
 });
 
-router.get('/marginalStatesDataForDay/:date', async (request, response, next) => {
+router.get('/marginalStatesDataForDate/:date', async (request, response, next) => {
     try {
         const states = await novelCovid.states();
         const listOfStates = states.map((stateData) => stateData.state.toLowerCase()).slice(0, 51);
