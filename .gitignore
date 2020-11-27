@@ -10,3 +10,6 @@ coronavirus-data-tracker-client/node_modules
 
 # Build Folder
 **/build
+
+# Debug Logs
+**debug.log

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { changeState } from '../../actions/stateActions';
+import { getTotalStateData, getMarginalStateData } from '../../actions/dataActions';
+import store from '../../store';
 import './StateSelection.css';
 
 const styles = {
@@ -13,12 +18,12 @@ const styles = {
     }
 };
 
-export class StateSelection extends Component {
+class StateSelection extends Component {
 
     menuItems = () => {
-        const { allStates } = this.props;
+        const { states } = store.getState().stateData;
         const menuItems = [];
-        allStates.forEach((state, index) => {
+        states.forEach((state, index) => {
             menuItems.push(
                 <MenuItem key={index} value={state}>{state}</MenuItem>
             );
@@ -26,23 +31,41 @@ export class StateSelection extends Component {
         return menuItems;
     }
 
+    changeCurrentState = (e) => {
+        this.props.changeState(e.target.value);
+        this.props.getTotalStateData(e.target.value);
+        this.props.getMarginalStateData(e.target.value);
+    }
+
     render() {
-        const { classes, currentState, onStateSelectChange } = this.props;
+        const { classes } = this.props;
+        const { currentState } = store.getState().stateData;
         return (
             <header className='stateSelectionHeader'>
                 Select a state to display its COVID-19 data
-            <Select className='stateSelectionSelect' value={currentState} onChange={onStateSelectChange} disableUnderline
-                MenuProps={{
-                    classes: {
-                        paper: classes.select
-                    }
-                }}
-            >
-                {this.menuItems()}
-            </Select>
+                <Select className='stateSelectionSelect' value={currentState} onChange={(e) => this.changeCurrentState(e)} disableUnderline
+                    MenuProps={{
+                        classes: {
+                            paper: classes.select
+                        }
+                    }}
+                >
+                    {this.menuItems()}
+                </Select>
             </header>
         );
     }
 }
 
-export default withStyles(styles)(StateSelection);
+const mapStateToProps = (state) => ({
+    data: state.data,
+    stateData: state.stateData
+});
+
+StateSelection.propTypes = {
+    changeState: PropTypes.func.isRequired,
+    getTotalStateData: PropTypes.func.isRequired,
+    getMarginalStateData: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, { changeState, getTotalStateData, getMarginalStateData })(withStyles(styles)(StateSelection));

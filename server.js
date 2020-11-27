@@ -42,7 +42,7 @@ if (process.env.NODE_ENV.trim() === 'development') {
 }
 
 // Use Express routes
-app.use('/coronavirusDataTracker/api', dataRoutes);
+app.use('/api', dataRoutes);
 
 // Use custom middlewares
 app.use(middlewares.notFound);

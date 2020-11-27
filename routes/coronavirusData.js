@@ -111,7 +111,7 @@ router.get('/marginalStatesDataForDay/:date', async (request, response, next) =>
         const data = [];
         await Promise.all(listOfStates.map(async (state) => {
             const stateData = await novelCovid.nyt.states({ state });
-            const inputDate = moment(new Date(request.params.date));
+            const inputDate = moment(request.params.date, 'YYYY-MM-DD');
             const today = moment();
             const daysDifference = today.diff(inputDate, 'days');
             let index = stateData.length - daysDifference - (daysDifference === 0 ? 1 : 0);

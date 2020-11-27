@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { withStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { getMarginalStatesDataForDay } from '../../actions/dataActions';
+import { changeDate } from '../../actions/dateActions';
 import 'date-fns';
 import moment from 'moment';
 import DateFnsUtils from '@date-io/date-fns';
 import Loader from 'react-loader-spinner';
+import store from '../../store';
 import '../../bootstrap.min.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import './USADataTable.css';
@@ -25,8 +30,7 @@ export class USADataTable extends Component {
     constructor() {
         super();
         this.state = {
-            data: [],
-            date: moment().subtract(1, 'days')
+            data: []
         };
     }
 
@@ -38,9 +42,9 @@ export class USADataTable extends Component {
     }
 
     tableBodyStyles = () => {
-        const { data } = this.props;
+        const { tableData } = this.props;
         return {
-            height: data !== undefined && data.length !== 0 ? '' : '200px'
+            height: tableData !== undefined && tableData.length !== 0 ? '' : '200px'
         };
     }
 
@@ -56,14 +60,26 @@ export class USADataTable extends Component {
         );
     }
 
+    // Change function name
+    // Change 'day' to 'date' everywhere (including APIs)
     tableData = () => {
         const { title } = this.props;
-        const data = this.state.data.length === 0 ? this.props.data : this.state.data;
+        // const { date } = this.state;
+        const data = this.props.tableData;
+        // Make call to getUpdatedData function
+        /*
+        let data = [];
+        if (title.includes('Total')) {
+            data = this.state.data.length === 0 ? this.props.tableData : this.state.data;
+        } else {
+            data = this.state.data.length === 0 ? this.props.tableData[date] : this.state.data;
+        }
+        */
         const isStatesDataTable = title.includes('States');
-        const tableData = [];
+        const tableDataElements = [];
         if (Array.isArray(data)) {
             data.forEach((day, index) => {
-                tableData.push(
+                tableDataElements.push(
                     <tr className='usaDataTable-column-header' key={index}>
                         <td>{isStatesDataTable ? day.state : day.day}</td>
                         <td>{day.cases}</td>
@@ -74,7 +90,7 @@ export class USADataTable extends Component {
         }
         return (
             <React.Fragment>
-                {tableData}
+                {tableDataElements}
             </React.Fragment>
         );
     }
@@ -99,7 +115,7 @@ export class USADataTable extends Component {
     sortByColumn = (e) => {
         let sortedData = [];
         const sortBy = e.currentTarget === undefined ? e : e.currentTarget.title;
-        const dataToSort = this.state.data.length > 0 ? this.state.data : this.props.data;
+        const dataToSort = this.state.data.length > 0 ? this.state.data : this.props.tableData;
         let isReverse = false;
         if (dataToSort !== undefined && dataToSort.length > 0) {
             if (sortBy === 'state') {
@@ -118,21 +134,23 @@ export class USADataTable extends Component {
         }
     }
 
-    handleDateChange = async (date) => {
-        const { marginalStatesDataForDay } = this.props;
+    handleDateChange = (date) => {
+        if (moment().diff(moment(date), 'days') > 29) date = moment().subtract(29, 'days');
+        if (moment(date).isAfter(moment())) date = moment().subtract(1, 'days');
+        this.props.getMarginalStatesDataForDay(moment(date).format('YYYY-MM-DD'));
+        this.props.changeDate(moment(date).format('YYYY-MM-DD'));
         this.setState({
-            date,
-            data: await marginalStatesDataForDay(moment(date).format('YYYY-MM-DD'))
+            data: []
         });
-    }
+    };
 
     datePicker = () => {
         const { classes } = this.props;
-        const { date } = this.state;
+        const date = moment(store.getState().date).format('YYYY-MM-DD');
         return (
             <span className='usaDataTable-date-picker-wrapper'>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker disableToolbar autoOk variant='inline' format='MM/dd/yyyy' margin='normal' value={date} onChange={this.handleDateChange}
+                    <KeyboardDatePicker disableToolbar autoOk variant='inline' format='MM/dd/yyyy' margin='normal' value={moment(date)} onChange={this.handleDateChange}
                         KeyboardButtonProps={{
                             'aria-label': 'change date'
                         }}
@@ -147,13 +165,13 @@ export class USADataTable extends Component {
     }
 
     render() {
-        const { data, title } = this.props;
-        const { date } = this.state;
+        const { tableData, title } = this.props;
+        const date = moment(store.getState().date).format('MM-DD');
         const isTotalData = title.includes('Total');
         return (
             <div className='usaDataTable' style={this.showTable()}>
                 <h3 className='usaDataTable-header' style={this.tableHeaderStyles()}>
-                    <span>{`${title}` + (isTotalData ? '' : ' for ' + moment(new Date(date)).format('MMM Do'))}</span>
+                    <span>{`${title}` + (isTotalData ? '' : ' for ' + moment(date, 'MM-DD').format('MMM Do'))}</span>
                     {isTotalData ? this.tableButtons() : this.datePicker()}
                 </h3>
                 <MDBTable style={this.tableBodyStyles()}>
@@ -161,7 +179,7 @@ export class USADataTable extends Component {
                         {this.tableHeader()}
                     </MDBTableHead>
                     <MDBTableBody>
-                        {data !== undefined && data.length !== 0 ? this.tableData()
+                        {tableData !== undefined && tableData.length !== 0 ? this.tableData()
                         : <tr><td><Loader className='usaDataTable-loader' type='TailSpin' color='blue' /></td></tr>}
                     </MDBTableBody>
                 </MDBTable>
@@ -169,5 +187,15 @@ export class USADataTable extends Component {
         );
     }
 }
+const mapStateToProps = (state) => ({
+    data: state.data,
+    date: state.date,
+    states: state.states
+});
 
-export default withStyles(styles)(USADataTable);
+USADataTable.propTypes = {
+    getMarginalStatesDataForDay: PropTypes.func.isRequired,
+    changeDate: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, { getMarginalStatesDataForDay, changeDate })(withStyles(styles)(USADataTable));

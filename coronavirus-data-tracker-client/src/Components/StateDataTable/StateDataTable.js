@@ -3,7 +3,7 @@ import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import '../../bootstrap.min.css';
 import './StateDataTable.css';
 
-export class StateDataTable extends Component {
+class StateDataTable extends Component {
 
     constructor() {
         super();
@@ -46,7 +46,7 @@ export class StateDataTable extends Component {
         let isReverse = false;
         if (dataToSort !== undefined && dataToSort.length > 0) {
             if (sortBy === 'day') {
-                isReverse = dataToSort[0][sortBy].substring(0, 2) !== '03';
+                isReverse = parseInt(dataToSort[0][sortBy].substring(0, 2)) > parseInt(dataToSort[dataToSort.length - 1][sortBy].substring(0, 2));
             } else {
                 isReverse = dataToSort[0][sortBy] > dataToSort[dataToSort.length - 1][sortBy];
             }
