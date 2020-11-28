@@ -1,4 +1,4 @@
-import { GET_STATES, CHANGE_STATE } from './types';
+import { GET_STATES, CHANGE_CURRENT_STATE } from './types';
 
 const serverUri = process.env.NODE_ENV.trim() === 'development' ? 'http://localhost:8000' : '';
 
@@ -10,9 +10,9 @@ export const getStates = () => async (dispatch) => {
     });
 };
 
-export const changeState = (state) => async (dispatch) => {
+export const changeCurrentState = (state) => async (dispatch) => {
     dispatch({
-        type: CHANGE_STATE,
+        type: CHANGE_CURRENT_STATE,
         payload: state
     });
 };

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { changeState } from '../../actions/stateActions';
+import { changeCurrentState } from '../../actions/stateActions';
 import { getTotalStateData, getMarginalStateData } from '../../actions/dataActions';
 import store from '../../store';
 import './StateSelection.css';
@@ -32,7 +32,7 @@ class StateSelection extends Component {
     }
 
     changeCurrentState = (e) => {
-        this.props.changeState(e.target.value);
+        this.props.changeCurrentState(e.target.value);
         this.props.getTotalStateData(e.target.value);
         this.props.getMarginalStateData(e.target.value);
     }
@@ -63,9 +63,9 @@ const mapStateToProps = (state) => ({
 });
 
 StateSelection.propTypes = {
-    changeState: PropTypes.func.isRequired,
+    changeCurrentState: PropTypes.func.isRequired,
     getTotalStateData: PropTypes.func.isRequired,
     getMarginalStateData: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { changeState, getTotalStateData, getMarginalStateData })(withStyles(styles)(StateSelection));
+export default connect(mapStateToProps, { changeCurrentState, getTotalStateData, getMarginalStateData })(withStyles(styles)(StateSelection));

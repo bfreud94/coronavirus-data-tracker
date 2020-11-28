@@ -1,4 +1,4 @@
-import { GET_STATES, CHANGE_STATE } from '../actions/types';
+import { GET_STATES, CHANGE_CURRENT_STATE } from '../actions/types';
 import { getStatesForDropdown } from '../util/util';
 
 const initialState = {
@@ -13,7 +13,7 @@ export default function (state = initialState, action) {
                 ...state,
                 states: action.payload
             };
-        case CHANGE_STATE: {
+        case CHANGE_CURRENT_STATE: {
             return {
                 ...state,
                 currentState: action.payload
