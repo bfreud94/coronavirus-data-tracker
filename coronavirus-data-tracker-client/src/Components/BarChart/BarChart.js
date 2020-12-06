@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Chart, ArgumentAxis, ValueAxis, BarSeries, Legend } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, ArgumentAxis, ValueAxis, BarSeries, Legend, ZoomAndPan } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import { Stack } from '@devexpress/dx-react-chart';
 import './BarChart.css';
@@ -53,6 +53,7 @@ class BarChart extends React.Component {
                         <BarSeries name='Deaths' valueField='deaths' argumentField='date' />
                         <Legend position='bottom' rootComponent={Root} labelComponent={Label} />
                         <Stack />
+                        <ZoomAndPan />
                     </Chart>
                 )
                 : ''}

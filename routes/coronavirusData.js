@@ -2,6 +2,8 @@
 const express = require('express');
 const novelCovid = require('novelcovid');
 const moment = require('moment');
+const fetch = require('node-fetch');
+const util = require('../util/util');
 
 // Initializing Express router
 const router = express.Router();
@@ -36,12 +38,15 @@ router.get('/marginalDataUSA', async (request, response, next) => {
 
 router.get('/totalDataByState/:state', async (request, response, next) => {
     try {
-        // Get List of States
-        const states = await novelCovid.states();
-        const listOfStates = states.map((stateData) => stateData.state.toLowerCase());
-        const { state } = request.params;
-        const data = listOfStates.includes(state.toLowerCase()) ? await novelCovid.nyt.states({ state }) : next(new Error('Input is not a state'));
-        response.send(data);
+        let data = await (await fetch('https://api.covidtracking.com/v1/states/daily.json')).json();
+        data = data.filter((item) => !util.nonStates.includes(item.state) && item.state === util.abbreviationsToState[request.params.state]);
+        data = data.map((item) => ({
+            date: item.date.toString().substring(0, 4) + '-' + item.date.toString().substring(4, 6) + '-' + item.date.toString().substring(6, 8),
+            state: item.state,
+            cases: item.positive,
+            deaths: item.death === null ? 0 : item.death
+        }));
+        response.send(data.reverse());
     } catch (error) {
         next(error);
     }
@@ -49,22 +54,15 @@ router.get('/totalDataByState/:state', async (request, response, next) => {
 
 router.get('/marginalDataByState/:state', async (request, response, next) => {
     try {
-        // Get List of States
-        const states = await novelCovid.states();
-        const listOfStates = states.map((stateData) => stateData.state.toLowerCase());
-        const { state } = request.params;
-        const data = listOfStates.includes(state.toLowerCase()) ? await novelCovid.nyt.states({ state }) : next(new Error('Input is not a state'));
-        const marginalData = [];
-        data.forEach((day, index) => {
-            if (index > 0) {
-                marginalData.push({
-                    date: data[index].date,
-                    cases: day.cases - data[index - 1].cases,
-                    deaths: day.deaths - data[index - 1].deaths
-                });
-            }
-        });
-        response.send(marginalData);
+        let data = await (await fetch('https://api.covidtracking.com/v1/states/daily.json')).json();
+        data = data.filter((item) => !util.nonStates.includes(item.state) && item.state === util.abbreviationsToState[request.params.state]);
+        data = data.map((item) => ({
+            date: item.date.toString().substring(0, 4) + '-' + item.date.toString().substring(4, 6) + '-' + item.date.toString().substring(6, 8),
+            state: item.state,
+            cases: item.positiveIncrease,
+            deaths: item.deathIncrease
+        }));
+        response.send(data.reverse());
     } catch (error) {
         next(error);
     }

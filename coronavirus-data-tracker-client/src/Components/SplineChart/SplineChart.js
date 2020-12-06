@@ -1,9 +1,8 @@
 import React from 'react';
-import { Chart, ArgumentAxis, ValueAxis, AreaSeries, Legend } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, ArgumentAxis, ValueAxis, AreaSeries, Legend, ZoomAndPan } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import { curveCatmullRom, area } from 'd3-shape';
 import Loader from 'react-loader-spinner';
-// import store from '../../store';
 import './SplineChart.css';
 
 const legendStyles = () => ({
@@ -66,6 +65,7 @@ class SplineChart extends React.Component {
                             <AreaSeries name='Cases' valueField='cases' argumentField='date' seriesComponent={Area} />
                             <AreaSeries name='Deaths' valueField='deaths' argumentField='date' seriesComponent={Area} />
                             <Legend position='bottom' rootComponent={Root} labelComponent={Label} />
+                            <ZoomAndPan />
                         </Chart>
                     )
                     : <Loader className='splineChart-loader' type='TailSpin' color='blue' /> }
