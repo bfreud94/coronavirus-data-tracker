@@ -71,7 +71,7 @@ class LineChart extends React.Component {
                         <ZoomAndPan />
                     </Chart>
                     )
-                : ''}
+                : <React.Fragment />}
             </div>
         );
     }

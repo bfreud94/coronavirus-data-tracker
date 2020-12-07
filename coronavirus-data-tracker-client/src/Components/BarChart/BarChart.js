@@ -56,7 +56,7 @@ class BarChart extends React.Component {
                         <ZoomAndPan />
                     </Chart>
                 )
-                : ''}
+                : <React.Fragment />}
             </div>
         );
     }
