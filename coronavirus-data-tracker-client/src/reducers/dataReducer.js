@@ -10,13 +10,6 @@ const initialState = {
     marginalStateData: getStates()
 };
 
-/*  State data needs to go into one object...
-    totalStateData map: keys states, values will be blank initially,
-    before action is called, first check the store if the entry for that state is empty
-    get rid of state reducer/api calls/apis
-
-*/
-
 export default function (state = initialState, action) {
     switch (action.type) {
         case GET_TOTAL_USA_DATA:
