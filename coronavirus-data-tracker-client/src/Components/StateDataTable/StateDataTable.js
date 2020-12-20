@@ -13,10 +13,10 @@ class StateDataTable extends Component {
     }
 
     tableHeader = () => (
-        <tr className='stateDataTable-column-header'>
-            <th className='stateDataTable-column-header-date' title='date' onClick={this.sortByColumn}>Date</th>
-            <th className='stateDataTable-column-header-cases' title='cases' onClick={this.sortByColumn}>Cases</th>
-            <th className='stateDataTable-column-header-deaths' title='deaths' onClick={this.sortByColumn}>Deaths</th>
+        <tr className='state-data-table-column-header'>
+            <th className='state-data-table-column-header-date' title='date' onClick={this.sortByColumn}>Date</th>
+            <th className='state-data-table-column-header-cases' title='cases' onClick={this.sortByColumn}>Cases</th>
+            <th className='state-data-table-column-header-deaths' title='deaths' onClick={this.sortByColumn}>Deaths</th>
         </tr>
     );
 
@@ -25,7 +25,7 @@ class StateDataTable extends Component {
         const tableData = [];
         data.forEach((date, index) => {
             tableData.push(
-                <tr className='stateDataTable-column-header' key={index}>
+                <tr className='state-data-table-column-header' key={index}>
                     <td>{date.date}</td>
                     <td>{date.cases}</td>
                     <td>{date.deaths}</td>
@@ -60,8 +60,8 @@ class StateDataTable extends Component {
     render() {
         const { title } = this.props;
         return (
-            <div className='stateDataTable'>
-                <h3 className='stateDataTable-header'>
+            <div className='state-data-table'>
+                <h3 className='state-data-table-header'>
                     <span>{title}</span>
                 </h3>
                 <MDBTable>
