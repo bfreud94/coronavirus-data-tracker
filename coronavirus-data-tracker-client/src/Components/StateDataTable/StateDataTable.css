@@ -11,6 +11,9 @@
 .state-data-table-column-header {
     text-align: center;
 }
+.state-data-table-row {
+    text-align: center;
+}
 .state-data-table-column-header-date {
     cursor: pointer;
 }

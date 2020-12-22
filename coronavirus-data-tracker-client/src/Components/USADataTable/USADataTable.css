@@ -23,6 +23,9 @@
 .usa-data-table-column-header-deaths {
     cursor: pointer;
 }
+.usa-data-table-row {
+    text-align: center;
+}
 .usa-data-table-column-header {
     text-align: center;
 }

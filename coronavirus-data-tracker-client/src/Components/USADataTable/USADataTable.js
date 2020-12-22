@@ -60,15 +60,37 @@ export class USADataTable extends Component {
         );
     }
 
+    totalData = () => {
+        const data = this.props.tableData;
+        let totalCases = 0;
+        let totalDeaths = 0;
+        data.forEach(({ cases, deaths }) => {
+            totalCases += cases;
+            totalDeaths += deaths;
+        });
+        return {
+            totalCases,
+            totalDeaths
+        };
+    }
+
     tableData = () => {
         const { title } = this.props;
         const data = this.props.tableData;
         const isStatesDataTable = title.includes('States');
         const tableDataElements = [];
+        const { totalCases, totalDeaths } = this.totalData();
+        tableDataElements.push(
+            <tr className='usa-data-table-row' key={0}>
+                <td>Total Data</td>
+                <td>{totalCases}</td>
+                <td>{totalDeaths}</td>
+            </tr>  
+        );
         if (Array.isArray(data)) {
             data.forEach((date, index) => {
                 tableDataElements.push(
-                    <tr className='usa-data-table-column-header' key={index}>
+                    <tr className='usa-data-table-row' key={index + 1}>
                         <td>{isStatesDataTable ? date.state : date.date}</td>
                         <td>{date.cases}</td>
                         <td>{date.deaths}</td>

@@ -20,12 +20,34 @@ class StateDataTable extends Component {
         </tr>
     );
 
+    totalData = () => {
+        const { data } = this.props;
+        let totalCases = 0;
+        let totalDeaths = 0;
+        data.forEach(({ cases, deaths }) => {
+            totalCases += cases;
+            totalDeaths += deaths;
+        });
+        return {
+            totalCases,
+            totalDeaths
+        };
+    }
+
     tableData = () => {
         const { data } = this.props;
         const tableData = [];
+        const { totalCases, totalDeaths } = this.totalData();
+        tableData.push(
+            <tr className='state-data-table-row' key={0}>
+                <td>Total Data</td>
+                <td>{totalCases}</td>
+                <td>{totalDeaths}</td>
+            </tr>  
+        );
         data.forEach((date, index) => {
             tableData.push(
-                <tr className='state-data-table-column-header' key={index}>
+                <tr className='state-data-table-row' key={index + 1}>
                     <td>{date.date}</td>
                     <td>{date.cases}</td>
                     <td>{date.deaths}</td>
