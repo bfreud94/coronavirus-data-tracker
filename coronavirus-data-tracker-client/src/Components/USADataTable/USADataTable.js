@@ -52,10 +52,10 @@ export class USADataTable extends Component {
         const { title } = this.props;
         const isStatesDataTable = title.includes('States');
         return (
-            <tr className='usaDataTable-column-header'>
-                {isStatesDataTable ? <th title='state' className='usaDataTable-column-header-state' onClick={this.sortByColumn}>State</th> : <th title='date' className='usaDataTable-column-header-date' onClick={this.sortByColumn}>Date</th>}
-                <th title='cases' className='usaDataTable-column-header-cases' onClick={this.sortByColumn}>Cases</th>
-                <th title='deaths' className='usaDataTable-column-header-deaths' onClick={this.sortByColumn}>Deaths</th>
+            <tr className='usa-data-table-column-header'>
+                {isStatesDataTable ? <th title='state' className='usa-data-table-column-header-state' onClick={this.sortByColumn}>State</th> : <th title='date' className='usa-data-table-column-header-date' onClick={this.sortByColumn}>Date</th>}
+                <th title='cases' className='usa-data-table-column-header-cases' onClick={this.sortByColumn}>Cases</th>
+                <th title='deaths' className='usa-data-table-column-header-deaths' onClick={this.sortByColumn}>Deaths</th>
             </tr>
         );
     }
@@ -68,7 +68,7 @@ export class USADataTable extends Component {
         if (Array.isArray(data)) {
             data.forEach((date, index) => {
                 tableDataElements.push(
-                    <tr className='usaDataTable-column-header' key={index}>
+                    <tr className='usa-data-table-column-header' key={index}>
                         <td>{isStatesDataTable ? date.state : date.date}</td>
                         <td>{date.cases}</td>
                         <td>{date.deaths}</td>
@@ -87,8 +87,8 @@ export class USADataTable extends Component {
         const { onHeaderButtonClick } = this.props;
         return (
             <React.Fragment>
-                <Button className='usaDataTable-total-cases-usa-button' variant='contained' color='primary' onClick={onHeaderButtonClick} name='Show Daily Totals'>Show Daily Totals</Button>
-                <Button className='usaDataTable-total-cases-each-state-button' variant='contained' color='primary' onClick={onHeaderButtonClick} name='Show State Totals'>Show State Totals</Button>
+                <Button className='usa-data-table-total-cases-usa-button' variant='contained' color='primary' onClick={onHeaderButtonClick} name='Show Daily Totals'>Show Daily Totals</Button>
+                <Button className='usa-data-table-total-cases-each-state-button' variant='contained' color='primary' onClick={onHeaderButtonClick} name='Show State Totals'>Show State Totals</Button>
             </React.Fragment>
         );
     }
@@ -136,7 +136,7 @@ export class USADataTable extends Component {
         const { classes } = this.props;
         const date = moment(store.getState().date).format('YYYY-MM-DD');
         return (
-            <span className='usaDataTable-date-picker-wrapper'>
+            <span className='usa-data-table-date-picker-wrapper'>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker disableToolbar autoOk variant='inline' format='MM/dd/yyyy' margin='normal' value={moment(date)} onChange={this.handleDateChange}
                         KeyboardButtonProps={{
@@ -157,8 +157,8 @@ export class USADataTable extends Component {
         const date = moment(store.getState().date).format('MM-DD');
         const isTotalData = title.includes('Total');
         return (
-            <div className='usaDataTable' style={this.showTable()}>
-                <h3 className='usaDataTable-header' style={this.tableHeaderStyles()}>
+            <div className='usa-data-table' style={this.showTable()}>
+                <h3 className='usa-data-table-header' style={this.tableHeaderStyles()}>
                     <span>{`${title}` + (isTotalData ? '' : ' for ' + moment(date, 'MM-DD').format('MMM Do'))}</span>
                     {isTotalData ? this.tableButtons() : this.datePicker()}
                 </h3>
@@ -168,7 +168,7 @@ export class USADataTable extends Component {
                     </MDBTableHead>
                     <MDBTableBody>
                         {tableData !== undefined && tableData.length !== 0 ? this.tableData()
-                        : <tr><td><Loader className='usaDataTable-loader' type='TailSpin' color='blue' /></td></tr>}
+                        : <tr><td><Loader className='usa-data-table-loader' type='TailSpin' color='blue' /></td></tr>}
                     </MDBTableBody>
                 </MDBTable>
             </div>

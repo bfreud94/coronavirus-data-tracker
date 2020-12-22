@@ -1,43 +1,40 @@
-.usaDataTable {
+.usa-data-table {
     margin: 100px 100px 200px 125px;
     overflow: auto;
     border: 2px solid rgb(200, 200, 200);
     border-radius: 5px;
 }
-.usaDataTable-header {
+.usa-data-table-header {
     margin: 0px 0px 0px 375px;
     padding: 20px 0px 20px 0px;
 }
-.usaDataTable-date-picker-wrapper {
+.usa-data-table-date-picker-wrapper {
     float: right
 }
-.usaDataTable-column-header-state {
+.usa-data-table-column-header-state {
     cursor: pointer;
 }
-.usaDataTable-column-header-date {
+.usa-data-table-column-header-date {
     cursor: pointer;
 }
-.usaDataTable-column-header-cases {
+.usa-data-table-column-header-cases {
     cursor: pointer;
 }
-.usaDataTable-column-header-deaths {
+.usa-data-table-column-header-deaths {
     cursor: pointer;
 }
-.usaDataTable-column-header {
+.usa-data-table-column-header {
     text-align: center;
 }
-.usaDataTable-loader {
+.usa-data-table-loader {
     position: absolute;
     left: 45.5%;
 }
-.usaDataTable-table-body {
-    padding: 0px 0px 100px 0px;
-}
-.usaDataTable-total-cases-usa-button {
+.usa-data-table-total-cases-usa-button {
     margin: 0px 20px 0px 0px !important;
     float: right;
 }
-.usaDataTable-total-cases-each-state-button {
+.usa-data-table-total-cases-each-state-button {
     margin: 0px 20px 0px 10px !important;
     float: right;
 }

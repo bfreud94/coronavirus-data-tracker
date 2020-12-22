@@ -20,11 +20,3 @@
 .state-data-table-column-header-deaths {
     cursor: pointer;
 }
-.state-data-table-total-cases-usa-button {
-    margin: 0px 20px 0px 0px !important;
-    float: right;
-}
-.state-data-table-total-cases-each-state-button {
-    margin: 0px 20px 0px 0px !important;
-    float: right;
-}
