@@ -60,6 +60,8 @@ export class USADataTable extends Component {
         );
     }
 
+    numberWithCommas = (number) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
     totalData = () => {
         const data = this.props.tableData;
         let totalCases = 0;
@@ -78,22 +80,25 @@ export class USADataTable extends Component {
         const { title } = this.props;
         const data = this.props.tableData;
         const isStatesDataTable = title.includes('States');
+        const isMarginalDataTable = title.includes('Marginal');
         const tableDataElements = [];
         const { totalCases, totalDeaths } = this.totalData();
-        tableDataElements.push(
-            <tr className='usa-data-table-row' key={0}>
-                <td>Total Data</td>
-                <td>{totalCases}</td>
-                <td>{totalDeaths}</td>
-            </tr>  
-        );
+        if (isMarginalDataTable) {
+            tableDataElements.push(
+                <tr className='usa-data-table-row' key={0}>
+                    <td>Total Data</td>
+                    <td>{this.numberWithCommas(totalCases)}</td>
+                    <td>{this.numberWithCommas(totalDeaths)}</td>
+                </tr>  
+            );
+        }
         if (Array.isArray(data)) {
             data.forEach((date, index) => {
                 tableDataElements.push(
                     <tr className='usa-data-table-row' key={index + 1}>
                         <td>{isStatesDataTable ? date.state : date.date}</td>
-                        <td>{date.cases}</td>
-                        <td>{date.deaths}</td>
+                        <td>{this.numberWithCommas(date.cases)}</td>
+                        <td>{this.numberWithCommas(date.deaths)}</td>
                     </tr>
                 );
             });

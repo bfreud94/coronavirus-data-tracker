@@ -34,23 +34,28 @@ class StateDataTable extends Component {
         };
     }
 
+    numberWithCommas = (number) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
     tableData = () => {
-        const { data } = this.props;
+        const { data, title } = this.props;
         const tableData = [];
         const { totalCases, totalDeaths } = this.totalData();
-        tableData.push(
-            <tr className='state-data-table-row' key={0}>
-                <td>Total Data</td>
-                <td>{totalCases}</td>
-                <td>{totalDeaths}</td>
-            </tr>  
-        );
+        const isMarginalDataTable = title.includes('Marginal');
+        if (isMarginalDataTable) {
+            tableData.push(
+                <tr className='state-data-table-row' key={0}>
+                    <td>Total Data</td>
+                    <td>{this.numberWithCommas(totalCases)}</td>
+                    <td>{this.numberWithCommas(totalDeaths)}</td>
+                </tr>  
+            );
+        }
         data.forEach((date, index) => {
             tableData.push(
                 <tr className='state-data-table-row' key={index + 1}>
                     <td>{date.date}</td>
-                    <td>{date.cases}</td>
-                    <td>{date.deaths}</td>
+                    <td>{this.numberWithCommas(date.cases)}</td>
+                    <td>{this.numberWithCommas(date.deaths)}</td>
                 </tr>
             );
         });
