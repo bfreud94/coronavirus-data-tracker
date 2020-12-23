@@ -21,7 +21,7 @@ class USAData extends Component {
     componentDidMount() {
         this.props.getTotalDataUSA();
         this.props.getMarginalDataUSA();
-        this.props.getTotalStatesDataForDate('l');
+        this.props.getTotalStatesDataForDate(moment(new Date()).format('YYYY-MM-DD'));
         this.props.getMarginalStatesDataForDate(moment(new Date()).format('YYYY-MM-DD'));
     }
 

@@ -28,7 +28,7 @@ export default function (state = initialState, action) {
             };
         case GET_TOTAL_STATES_DATA_FOR_DATE:
             Object.keys(state.totalStatesDataForDate).forEach((date) => {
-                if (date.toString() === action.payload[0].date.toString()) state.totalStatesDataForDate[date] = action.payload
+                if (date.toString() === action.payload[0].date.toString()) state.totalStatesDataForDate[date] = action.payload;
             });
             return {
                 ...state,
@@ -36,7 +36,7 @@ export default function (state = initialState, action) {
             };
         case GET_MARGINAL_STATES_DATA_FOR_DATE:
             Object.keys(state.marginalStatesDataForDate).forEach((date) => {
-                if (date.toString() === action.payload[0].date.toString()) state.marginalStatesDataForDate[date] = action.payload
+                if (date.toString() === action.payload[0].date.toString()) state.marginalStatesDataForDate[date] = action.payload;
             });
             return {
                 ...state,

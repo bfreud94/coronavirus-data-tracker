@@ -1,4 +1,4 @@
-const abbreviationsToState = {
+const statesToAbbreviations = {
     Alabama: 'AL',
     Alaska: 'AK',
     Arizona: 'AZ',
@@ -21,7 +21,7 @@ const abbreviationsToState = {
     Maryland: 'MD',
     Massachusetts: 'MA',
     Michigan: 'MI',
-    Minnesota: "MN",
+    Minnesota: 'MN',
     Mississippi: 'MS',
     Missouri: 'MO',
     Montana: 'MT',
@@ -54,6 +54,6 @@ const abbreviationsToState = {
 const nonStates = ['AS', 'DC', 'GU', 'MP', 'PR', 'VI'];
 
 module.exports = {
-    abbreviationsToState,
+    statesToAbbreviations,
     nonStates
 };
