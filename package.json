@@ -6,6 +6,7 @@
   "scripts": {
     "client-install": "npm install --prefix coronavirus-data-tracker-client",
     "start": "node server.js",
+    "start-dev-server": "nodemon server.js",
     "client": "npm start --prefix coronavirus-data-tracker-client",
     "dev": "SET NODE_ENV=development && concurrently \"cd coronavirus-data-tracker-client && npm start\" \"nodemon server.js\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix coronavirus-data-tracker-client && npm run build --prefix coronavirus-data-tracker-client"
