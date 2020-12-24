@@ -4,8 +4,9 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import Header from './Components/Header/Header';
 import USAData from './Components/USAData/USAData';
 import StateData from './Components/StateData/StateData';
-import store from './store';
 import '@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import store from './store';
 
 class App extends React.Component {
 

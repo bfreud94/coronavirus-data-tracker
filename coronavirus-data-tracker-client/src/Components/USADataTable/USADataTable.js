@@ -12,7 +12,6 @@ import moment from 'moment';
 import DateFnsUtils from '@date-io/date-fns';
 import Loader from 'react-loader-spinner';
 import store from '../../store';
-import '../../bootstrap.min.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import './USADataTable.css';
 
