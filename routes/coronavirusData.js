@@ -69,13 +69,13 @@ router.get('/marginalDataByState/:state', async (request, response, next) => {
     }
 });
 
-router.get('/totalStatesDataForDate/:day', async (request, response, next) => {
+router.get('/totalStatesDataForDate/:date', async (request, response, next) => {
     try {
-        const { day } = request.params;
+        const { date } = request.params;
         let data = await (await fetch('https://api.covidtracking.com/v1/states/daily.json')).json();
-        data = data.filter((item) => convertToDate(item.date) === day && !nonStates.includes(item.state));
+        data = data.filter((item) => convertToDate(item.date) === date && !nonStates.includes(item.state));
         data = data.map((item) => ({
-            date: day,
+            date,
             state: states.filter((state) => statesToAbbreviations[state] === item.state)[0],
             cases: item.positive === null ? 0 : item.positive,
             deaths: item.death === null ? 0 : item.death
