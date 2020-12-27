@@ -19,10 +19,11 @@ class USAData extends Component {
     }
 
     componentDidMount() {
+        const { date } = store.getState();
         this.props.getTotalDataUSA();
         this.props.getMarginalDataUSA();
-        this.props.getTotalStatesDataForDate(moment(new Date()).format('YYYY-MM-DD'));
-        this.props.getMarginalStatesDataForDate(moment(new Date()).format('YYYY-MM-DD'));
+        this.props.getTotalStatesDataForDate(date);
+        this.props.getMarginalStatesDataForDate(date);
     }
 
     formatData = (data) => data.filter((date, index) => index % 7 === 0);

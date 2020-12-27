@@ -150,7 +150,7 @@ export class USADataTable extends Component {
 
     handleDateChange = (date) => {
         if (moment().diff(moment(date), 'days') > 29) date = moment().subtract(29, 'days');
-        if (moment(date).isAfter(moment())) date = moment().subtract(1, 'days');
+        if (moment(date).isAfter(moment().subtract(1, 'days'))) date = moment().subtract(1, 'days');
         this.props.getMarginalStatesDataForDate(moment(date).format('YYYY-MM-DD'));
         this.props.changeDate(moment(date).format('YYYY-MM-DD'));
         this.setState({
