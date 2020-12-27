@@ -110,4 +110,12 @@ router.get('/marginalStatesDataForDate/:date', async (request, response, next) =
     }
 });
 
+router.get('/states/', async (request, response, next) => {
+    try {
+        response.send(states);
+    } catch (error) {
+        next(error);
+    }
+});
+
 module.exports = router;

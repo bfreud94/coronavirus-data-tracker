@@ -1,17 +1,22 @@
-import { GET_MARGINAL_STATES_DATA_FOR_DATE, GET_MARGINAL_DATA_USA, GET_TOTAL_STATES_DATA_FOR_DATE, GET_TOTAL_USA_DATA, GET_TOTAL_STATE_DATA, GET_MARGINAL_STATE_DATA } from '../actions/types';
-import { getStates } from '../util/util';
+import { GET_MARGINAL_STATES_DATA_FOR_DATE, GET_MARGINAL_DATA_USA, GET_TOTAL_STATES_DATA_FOR_DATE, GET_TOTAL_USA_DATA, GET_TOTAL_STATE_DATA, GET_MARGINAL_STATE_DATA, GET_STATES } from '../actions/types';
 
 const initialState = {
     totalDataUSA: [],
     marginalDataUSA: [],
     totalStatesDataForDate: {},
     marginalStatesDataForDate: {},
-    totalStateData: getStates(),
-    marginalStateData: getStates()
+    totalStateData: {},
+    marginalStateData: {}
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case GET_STATES:
+            return {
+                ...state,
+                totalStateData: action.payload.reduce((a, b) => (a[b] = [], a), {}),
+                marginalStateData: action.payload.reduce((a, b) => (a[b] = [], a), {})
+            };
         case GET_TOTAL_USA_DATA:
             if (state.totalDataUSA.length === 0) action.payload.forEach((date) => state.totalStatesDataForDate[date.date] = []);
             return {

@@ -7,6 +7,7 @@ import LineChart from '../LineChart/LineChart';
 import BarChart from '../BarChart/BarChart';
 import USADataTable from '../USADataTable/USADataTable';
 import { getTotalDataUSA, getMarginalDataUSA, getTotalStatesDataForDate, getMarginalStatesDataForDate } from '../../actions/dataActions';
+import { getStates } from '../../actions/stateActions';
 import store from '../../store';
 
 class USAData extends Component {
@@ -20,6 +21,7 @@ class USAData extends Component {
 
     componentDidMount() {
         const { date } = store.getState();
+        this.props.getStates();
         this.props.getTotalDataUSA();
         this.props.getMarginalDataUSA();
         this.props.getTotalStatesDataForDate(date);
@@ -72,14 +74,16 @@ class USAData extends Component {
 
 const mapStateToProps = (state) => ({
     data: state.data,
-    states: state.states
+    states: state.states,
+    stateData: state.stateData
 });
 
 USAData.propTypes = {
     getTotalDataUSA: PropTypes.func.isRequired,
     getMarginalDataUSA: PropTypes.func.isRequired,
     getTotalStatesDataForDate: PropTypes.func.isRequired,
-    getMarginalStatesDataForDate: PropTypes.func.isRequired
+    getMarginalStatesDataForDate: PropTypes.func.isRequired,
+    getStates: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { getTotalDataUSA, getMarginalDataUSA, getTotalStatesDataForDate, getMarginalStatesDataForDate })(USAData);
+export default connect(mapStateToProps, { getTotalDataUSA, getMarginalDataUSA, getTotalStatesDataForDate, getMarginalStatesDataForDate, getStates })(USAData);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import Header from './Components/Header/Header';
@@ -8,7 +8,7 @@ import '@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import store from './store';
 
-class App extends React.Component {
+class App extends Component {
 
     render() {
         return (
@@ -23,10 +23,10 @@ class App extends React.Component {
                         <USAData title='Marginal Coronavirus' />
                     </Route>
                     <Route exact path='/totalStateData'>
-                        <StateData title={`Total Coronavirus Cases vs Deaths in `} />
+                        <StateData title='Total Coronavirus Cases vs Deaths in ' />
                     </Route>
                     <Route exact path='/marginalStateData'>
-                        <StateData title={`Marginal Coronavirus Cases vs Deaths in `} />
+                        <StateData title='Marginal Coronavirus Cases vs Deaths in ' />
                     </Route>
                 </Provider>
             </Router>

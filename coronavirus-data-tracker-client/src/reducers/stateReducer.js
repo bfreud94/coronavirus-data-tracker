@@ -1,8 +1,7 @@
 import { GET_STATES, CHANGE_CURRENT_STATE } from '../actions/types';
-import { getStatesForDropdown } from '../util/util';
 
 const initialState = {
-    states: getStatesForDropdown(),
+    states: ['New York'],
     currentState: 'New York'
 };
 
