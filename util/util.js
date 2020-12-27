@@ -53,7 +53,13 @@ const statesToAbbreviations = {
 
 const nonStates = ['AS', 'DC', 'GU', 'MP', 'PR', 'VI'];
 
+const states = Object.keys(statesToAbbreviations);
+
+const convertToDate = (date) => `${date.toString().substring(0, 4)}-${date.toString().substring(4, 6)}-${date.toString().substring(6, 8)}`;
+
 module.exports = {
-    statesToAbbreviations,
-    nonStates
+    convertToDate,
+    nonStates,
+    states,
+    statesToAbbreviations
 };
