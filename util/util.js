@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const statesToAbbreviations = {
     Alabama: 'AL',
     Alaska: 'AK',
@@ -57,8 +59,11 @@ const states = Object.keys(statesToAbbreviations);
 
 const convertToDate = (date) => `${date.toString().substring(0, 4)}-${date.toString().substring(4, 6)}-${date.toString().substring(6, 8)}`;
 
+const isValidDateFormat = (date) => moment(date, 'YYYY-MM-DD', true).isValid();
+
 module.exports = {
     convertToDate,
+    isValidDateFormat,
     nonStates,
     states,
     statesToAbbreviations

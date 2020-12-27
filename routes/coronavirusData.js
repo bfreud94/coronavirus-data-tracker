@@ -1,7 +1,7 @@
 // Imports for external dependencies
 const express = require('express');
 const fetch = require('node-fetch');
-const { convertToDate, nonStates, states, statesToAbbreviations } = require('../util/util');
+const { convertToDate, isValidDateFormat, nonStates, states, statesToAbbreviations } = require('../util/util');
 
 // Initializing Express router
 const router = express.Router();
@@ -37,7 +37,7 @@ router.get('/marginalDataUSA', async (request, response, next) => {
 router.get('/totalDataByState/:state', async (request, response, next) => {
     try {
         const { state } = request.params;
-        if (!states.includes(state)) throw new Error('Not a valid state');
+        if (!states.includes(state)) throw new Error('Invalid state');
         let data = await (await fetch('https://api.covidtracking.com/v1/states/daily.json')).json();
         data = data.filter((item) => !nonStates.includes(item.state) && item.state === statesToAbbreviations[state]);
         data = data.map((item) => ({
@@ -55,6 +55,7 @@ router.get('/totalDataByState/:state', async (request, response, next) => {
 router.get('/marginalDataByState/:state', async (request, response, next) => {
     try {
         const { state } = request.params;
+        if (!states.includes(state)) throw new Error('Invalid state');
         let data = await (await fetch('https://api.covidtracking.com/v1/states/daily.json')).json();
         data = data.filter((item) => !nonStates.includes(item.state) && item.state === statesToAbbreviations[state]);
         data = data.map((item) => ({
@@ -72,6 +73,7 @@ router.get('/marginalDataByState/:state', async (request, response, next) => {
 router.get('/totalStatesDataForDate/:date', async (request, response, next) => {
     try {
         const { date } = request.params;
+        if (!isValidDateFormat(date)) throw new Error('Invalid date');
         let data = await (await fetch('https://api.covidtracking.com/v1/states/daily.json')).json();
         data = data.filter((item) => convertToDate(item.date) === date && !nonStates.includes(item.state));
         data = data.map((item) => ({
@@ -91,6 +93,7 @@ router.get('/totalStatesDataForDate/:date', async (request, response, next) => {
 router.get('/marginalStatesDataForDate/:date', async (request, response, next) => {
     try {
         const { date } = request.params;
+        if (!isValidDateFormat(date)) throw new Error('Invalid date');
         let data = await (await fetch('https://api.covidtracking.com/v1/states/daily.json')).json();
         data = data.filter((item) => convertToDate(item.date) === date && !nonStates.includes(item.state));
         data = data.map((item) => ({
