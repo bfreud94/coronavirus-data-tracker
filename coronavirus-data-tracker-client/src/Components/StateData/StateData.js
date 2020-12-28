@@ -12,9 +12,11 @@ import store from '../../store';
 class StateData extends Component {
 
     componentDidMount() {
+        const { title } = this.props;
         const { currentState } = store.getState().stateData;
-        this.props.getTotalStateData(currentState);
-        this.props.getMarginalStateData(currentState);
+        const { totalStateData, marginalStateData } = store.getState().data;
+        if (title.includes('Total') && totalStateData[currentState].length === 0) this.props.getTotalStateData(currentState);
+        if (title.includes('Marginal') && marginalStateData[currentState].length === 0) this.props.getMarginalStateData(currentState);
     }
 
     formatData = () => {
@@ -32,7 +34,7 @@ class StateData extends Component {
         let title = this.props.title + store.getState().stateData.currentState;
         return (
             <React.Fragment>
-                <StateSelection />
+                <StateSelection pageTitle={title} />
                 <SplineChart data={this.minimizeDataSet(this.formatData())} title={title} />
                 <LineChart data={this.minimizeDataSet(this.formatData())} title={title} />
                 <BarChart data={this.minimizeDataSet(this.formatData())} title={title} />

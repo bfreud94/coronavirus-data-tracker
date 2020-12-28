@@ -20,12 +20,15 @@ class USAData extends Component {
     }
 
     componentDidMount() {
+        const { title } = this.props;
         const { date } = store.getState();
-        this.props.getStates();
-        this.props.getTotalDataUSA();
-        this.props.getMarginalDataUSA();
-        this.props.getTotalStatesDataForDate(date);
-        this.props.getMarginalStatesDataForDate(date);
+        const { states } = store.getState().stateData;
+        const { totalDataUSA, marginalDataUSA, totalStatesDataForDate, marginalStatesDataForDate } = store.getState().data;
+        if (states.length === 1) this.props.getStates();
+        if (totalDataUSA.length === 0 && title.includes('Total')) this.props.getTotalDataUSA();
+        if (marginalDataUSA.length === 0 && title.includes('Marginal')) this.props.getMarginalDataUSA();
+        if (title.includes('Total') && (Object.keys(totalStatesDataForDate).length === 0 || totalStatesDataForDate[date.substring(5)].length === 0)) this.props.getTotalStatesDataForDate(date);
+        if (title.includes('Marginal') && (Object.keys(marginalStatesDataForDate).length === 0 || marginalStatesDataForDate[date.substring(5)].length === 0)) this.props.getMarginalStatesDataForDate(date);
     }
 
     minimizeDataSet = (data) => data.filter((date, index) => index % 7 === 0);

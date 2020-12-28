@@ -32,9 +32,11 @@ class StateSelection extends Component {
     }
 
     changeCurrentState = (state) => {
+        const { pageTitle } = this.props;
+        const { totalStateData, marginalStateData } = store.getState().data;
         this.props.changeCurrentState(state);
-        this.props.getTotalStateData(state);
-        this.props.getMarginalStateData(state);
+        if (pageTitle.includes('Total') && totalStateData[state].length === 0) this.props.getTotalStateData(state);
+        if (pageTitle.includes('Marginal') && marginalStateData[state].length === 0) this.props.getMarginalStateData(state);
     }
 
     render() {
@@ -65,7 +67,8 @@ const mapStateToProps = (state) => ({
 StateSelection.propTypes = {
     changeCurrentState: PropTypes.func.isRequired,
     getTotalStateData: PropTypes.func.isRequired,
-    getMarginalStateData: PropTypes.func.isRequired
+    getMarginalStateData: PropTypes.func.isRequired,
+    pageTitle: PropTypes.string.isRequired
 };
 
 export default connect(mapStateToProps, { changeCurrentState, getTotalStateData, getMarginalStateData })(withStyles(styles)(StateSelection));
