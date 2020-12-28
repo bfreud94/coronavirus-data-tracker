@@ -31,10 +31,10 @@ class StateSelection extends Component {
         return menuItems;
     }
 
-    changeCurrentState = (e) => {
-        this.props.changeCurrentState(e.target.value);
-        this.props.getTotalStateData(e.target.value);
-        this.props.getMarginalStateData(e.target.value);
+    changeCurrentState = (state) => {
+        this.props.changeCurrentState(state);
+        this.props.getTotalStateData(state);
+        this.props.getMarginalStateData(state);
     }
 
     render() {
@@ -43,7 +43,7 @@ class StateSelection extends Component {
         return (
             <header className='stateSelectionHeader'>
                 Select a state to display its COVID-19 data
-                <Select className='stateSelectionSelect' value={currentState} onChange={(e) => this.changeCurrentState(e)} disableUnderline
+                <Select className='stateSelectionSelect' value={currentState} onChange={(e) => this.changeCurrentState(e.target.value)} disableUnderline
                     MenuProps={{
                         classes: {
                             paper: classes.select

@@ -26,14 +26,16 @@ class StateData extends Component {
         return data;
     }
 
+    minimizeDataSet = (data) => data.filter((date, index) => index % 7 === 0);
+
     render() {
         let title = this.props.title + store.getState().stateData.currentState;
         return (
             <React.Fragment>
                 <StateSelection />
-                <SplineChart data={this.formatData()} title={title} />
-                <LineChart data={this.formatData()} title={title} />
-                <BarChart data={this.formatData()} title={title} />
+                <SplineChart data={this.minimizeDataSet(this.formatData())} title={title} />
+                <LineChart data={this.minimizeDataSet(this.formatData())} title={title} />
+                <BarChart data={this.minimizeDataSet(this.formatData())} title={title} />
                 <StateDataTable data={this.formatData()} title={title} />
             </React.Fragment>
         );

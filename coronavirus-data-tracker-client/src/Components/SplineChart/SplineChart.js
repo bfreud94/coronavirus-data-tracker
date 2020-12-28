@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Chart, ArgumentAxis, ValueAxis, AreaSeries, Legend, ZoomAndPan } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import { curveCatmullRom, area } from 'd3-shape';
@@ -73,5 +74,11 @@ class SplineChart extends React.Component {
         );
     }
 }
+
+SplineChart.propTypes = {
+    classes: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired
+};
 
 export default withStyles(splineChartStyles)(SplineChart);

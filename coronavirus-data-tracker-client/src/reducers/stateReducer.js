@@ -7,11 +7,12 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case GET_STATES:
+        case GET_STATES: {
             return {
                 ...state,
                 states: action.payload
             };
+        }
         case CHANGE_CURRENT_STATE: {
             return {
                 ...state,

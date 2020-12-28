@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Chart, ArgumentAxis, ValueAxis, LineSeries, Legend, ZoomAndPan } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import './LineChart.css';
@@ -54,7 +55,8 @@ const ValueLabel = (props) => {
     );
 };
 
-class LineChart extends React.Component {
+class LineChart extends Component {
+
     render() {
         const { classes, data, title } = this.props;
         return (
@@ -76,5 +78,11 @@ class LineChart extends React.Component {
         );
     }
 }
+
+LineChart.propTypes = {
+    classes: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired
+};
 
 export default withStyles(lineChartStyles)(LineChart);

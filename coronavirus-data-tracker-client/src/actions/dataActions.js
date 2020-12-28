@@ -1,5 +1,4 @@
 import { GET_MARGINAL_STATE_DATA, GET_MARGINAL_STATES_DATA_FOR_DATE, GET_MARGINAL_DATA_USA, GET_TOTAL_STATE_DATA, GET_TOTAL_STATES_DATA_FOR_DATE, GET_TOTAL_USA_DATA } from './types';
-import _ from 'lodash';
 
 const serverUri = process.env.NODE_ENV.trim() === 'development' ? 'http://localhost:8000' : '';
 
@@ -7,7 +6,7 @@ export const getTotalDataUSA = () => async (dispatch) => {
     const response = await (await fetch(`${serverUri}/api/totalDataUSA`)).json();
     dispatch({
         type: GET_TOTAL_USA_DATA,
-        payload: _.takeRight(response.map((date) => ({ date: date.date.substring(5), cases: date.cases, deaths: date.deaths })), 240)
+        payload: response.splice(70, response.length).map((date) => ({ date: date.date.substring(5), cases: date.cases, deaths: date.deaths }))
     });
 };
 
@@ -15,7 +14,7 @@ export const getMarginalDataUSA = () => async (dispatch) => {
     const response = await (await fetch(`${serverUri}/api/marginalDataUSA`)).json();
     dispatch({
         type: GET_MARGINAL_DATA_USA,
-        payload: _.takeRight(response.map((date) => ({ date: date.date.substring(5), cases: date.cases, deaths: date.deaths })), 240)
+        payload: response.splice(70, response.length).map((date) => ({ date: date.date.substring(5), cases: date.cases, deaths: date.deaths }))
     });
 };
 
@@ -41,7 +40,7 @@ export const getTotalStateData = (state) => async (dispatch) => {
         type: GET_TOTAL_STATE_DATA,
         payload: {
             stateName: state,
-            data: response.map((date) => ({ date: date.date.substring(5), cases: date.cases, deaths: date.deaths }))
+            data: response.splice(21, response.length).map((date) => ({ date: date.date.substring(5), cases: date.cases, deaths: date.deaths }))
         }
     });
 };
@@ -52,7 +51,7 @@ export const getMarginalStateData = (state) => async (dispatch) => {
         type: GET_MARGINAL_STATE_DATA,
         payload: {
             stateName: state,
-            data: response.map((date) => ({ date: date.date.substring(5), cases: date.cases, deaths: date.deaths }))
+            data: response.splice(21, response.length).map((date) => ({ date: date.date.substring(5), cases: date.cases, deaths: date.deaths }))
         }
     });
 };

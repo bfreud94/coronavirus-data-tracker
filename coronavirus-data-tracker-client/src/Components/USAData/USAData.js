@@ -28,7 +28,7 @@ class USAData extends Component {
         this.props.getMarginalStatesDataForDate(date);
     }
 
-    formatData = (data) => data.filter((date, index) => index % 7 === 0);
+    minimizeDataSet = (data) => data.filter((date, index) => index % 7 === 0);
 
     onHeaderButtonClick = (e) => {
         this.setState({
@@ -43,7 +43,7 @@ class USAData extends Component {
         return data;
     }
 
-    getDateData = () => {
+    getDataForSpecificDate = () => {
         const { title } = this.props;
         const date = moment(store.getState().date).format('MM-DD');
         const { totalStatesDataForDate, marginalStatesDataForDate } = store.getState().data;
@@ -59,12 +59,12 @@ class USAData extends Component {
         const { title } = this.props;
         const { totalStatesDataIsVisible } = this.state;
         const data = this.getData();
-        const dateData = this.getDateData();
+        const dateData = this.getDataForSpecificDate();
         return (
             <React.Fragment>
-                <SplineChart data={this.formatData(data)} title={title + ' Cases vs. Deaths'} />
-                <LineChart data={this.formatData(data)} title={title + ' Cases vs. Deaths'} />
-                <BarChart data={this.formatData(data)} title={title + ' Cases vs. Deaths'} />
+                <SplineChart data={this.minimizeDataSet(data)} title={title + ' Cases vs. Deaths'} />
+                <LineChart data={this.minimizeDataSet(data)} title={title + ' Cases vs. Deaths'} />
+                <BarChart data={this.minimizeDataSet(data)} title={title + ' Cases vs. Deaths'} />
                 <USADataTable tableData={dateData} isVisible={totalStatesDataIsVisible} title={title + ' Data for all States'} onHeaderButtonClick={this.onHeaderButtonClick} />
                 <USADataTable tableData={data} isVisible={!totalStatesDataIsVisible} title={title + ' Data for all Dates'} onHeaderButtonClick={this.onHeaderButtonClick} />
             </React.Fragment>

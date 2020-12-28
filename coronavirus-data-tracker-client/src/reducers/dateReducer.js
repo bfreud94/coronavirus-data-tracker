@@ -5,8 +5,9 @@ const initialState = moment().subtract(1, 'days').format('YYYY-MM-DD');
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case CHANGE_DATE:
-            return action.payload
+        case CHANGE_DATE: {
+            return action.payload;
+        }
         default:
             return state;
     }

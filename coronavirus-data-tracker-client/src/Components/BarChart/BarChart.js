@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Chart, ArgumentAxis, ValueAxis, BarSeries, Legend, ZoomAndPan } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import { Stack } from '@devexpress/dx-react-chart';
@@ -37,7 +38,7 @@ const legendLabelBase = ({ classes, ...restProps }) => (
 
 const Label = withStyles(legendLabelStyles, { name: 'LegendLabel' })(legendLabelBase);
 
-class BarChart extends React.Component {
+class BarChart extends Component {
 
     render() {
         const { classes, data, title } = this.props;
@@ -61,5 +62,11 @@ class BarChart extends React.Component {
         );
     }
 }
+
+BarChart.propTypes = {
+    classes: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired
+};
 
 export default withStyles(barChartStyles)(BarChart);

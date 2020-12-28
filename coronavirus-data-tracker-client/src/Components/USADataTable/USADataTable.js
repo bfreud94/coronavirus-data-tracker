@@ -33,31 +33,21 @@ export class USADataTable extends Component {
         };
     }
 
-    tableHeaderStyles = () => {
-        const { title } = this.props;
-        return {
-            margin: title.includes('Marginal') ? '0px 0px 0px 100px' : '0px 0px 0px 375px'
-        };
-    }
+    tableHeaderStyles = () => ({
+        margin: '0px 0px 0px 375px'
+    });
 
-    tableBodyStyles = () => {
-        const { tableData } = this.props;
-        return {
-            height: tableData !== undefined && tableData.length !== 0 ? '' : '200px'
-        };
-    }
+    tableBodyStyles = () => ({
+        height: this.props.tableData !== undefined && this.props.tableData.length !== 0 ? '' : '200px'
+    });
 
-    tableHeader = () => {
-        const { title } = this.props;
-        const isStatesDataTable = title.includes('States');
-        return (
-            <tr className='usa-data-table-column-header'>
-                {isStatesDataTable ? <th title='state' className='usa-data-table-column-header-state' onClick={this.sortByColumn}>State</th> : <th title='date' className='usa-data-table-column-header-date' onClick={this.sortByColumn}>Date</th>}
-                <th title='cases' className='usa-data-table-column-header-cases' onClick={this.sortByColumn}>Cases</th>
-                <th title='deaths' className='usa-data-table-column-header-deaths' onClick={this.sortByColumn}>Deaths</th>
-            </tr>
-        );
-    }
+    tableHeader = () => (
+        <tr className='usa-data-table-column-header'>
+            {this.props.title.includes('States') ? <th title='state' className='usa-data-table-column-header-state' onClick={this.sortByColumn}>State</th> : <th title='date' className='usa-data-table-column-header-date' onClick={this.sortByColumn}>Date</th>}
+            <th title='cases' className='usa-data-table-column-header-cases' onClick={this.sortByColumn}>Cases</th>
+            <th title='deaths' className='usa-data-table-column-header-deaths' onClick={this.sortByColumn}>Deaths</th>
+        </tr>
+    );
 
     numberWithCommas = (number) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
@@ -88,7 +78,7 @@ export class USADataTable extends Component {
                     <td>Total Data</td>
                     <td>{this.numberWithCommas(totalCases)}</td>
                     <td>{this.numberWithCommas(totalDeaths)}</td>
-                </tr>  
+                </tr>
             );
         }
         if (Array.isArray(data)) {
