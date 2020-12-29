@@ -65,11 +65,11 @@ class USAData extends Component {
         const dateData = this.getDataForSpecificDate();
         return (
             <React.Fragment>
+                <USADataTable tableData={dateData} isVisible={totalStatesDataIsVisible} title={title + ' Data for all States'} onHeaderButtonClick={this.onHeaderButtonClick} />
+                <USADataTable tableData={data} isVisible={!totalStatesDataIsVisible} title={title + ' Data for all Dates'} onHeaderButtonClick={this.onHeaderButtonClick} />
                 <SplineChart data={this.minimizeDataSet(data)} title={title + ' Cases vs. Deaths'} />
                 <LineChart data={this.minimizeDataSet(data)} title={title + ' Cases vs. Deaths'} />
                 <BarChart data={this.minimizeDataSet(data)} title={title + ' Cases vs. Deaths'} />
-                <USADataTable tableData={dateData} isVisible={totalStatesDataIsVisible} title={title + ' Data for all States'} onHeaderButtonClick={this.onHeaderButtonClick} />
-                <USADataTable tableData={data} isVisible={!totalStatesDataIsVisible} title={title + ' Data for all Dates'} onHeaderButtonClick={this.onHeaderButtonClick} />
             </React.Fragment>
         );
     }

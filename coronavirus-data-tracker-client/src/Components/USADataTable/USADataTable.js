@@ -33,10 +33,6 @@ export class USADataTable extends Component {
         };
     }
 
-    tableHeaderStyles = () => ({
-        margin: '0px 0px 0px 375px'
-    });
-
     tableBodyStyles = () => ({
         height: this.props.tableData !== undefined && this.props.tableData.length !== 0 ? '' : '200px'
     });
@@ -174,7 +170,7 @@ export class USADataTable extends Component {
         const isTotalData = title.includes('Total');
         return (
             <div className='usa-data-table' style={this.showTable()}>
-                <h3 className='usa-data-table-header' style={this.tableHeaderStyles()}>
+                <h3 className='usa-data-table-header'>
                     <span>{`${title}` + (isTotalData ? '' : ' for ' + moment(date, 'MM-DD').format('MMM Do'))}</span>
                     {isTotalData ? this.tableButtons() : this.datePicker()}
                 </h3>

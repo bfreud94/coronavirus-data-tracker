@@ -35,10 +35,10 @@ class StateData extends Component {
         return (
             <React.Fragment>
                 <StateSelection pageTitle={title} />
+                <StateDataTable data={this.formatData()} title={title} />
                 <SplineChart data={this.minimizeDataSet(this.formatData())} title={title} />
                 <LineChart data={this.minimizeDataSet(this.formatData())} title={title} />
                 <BarChart data={this.minimizeDataSet(this.formatData())} title={title} />
-                <StateDataTable data={this.formatData()} title={title} />
             </React.Fragment>
         );
     }
