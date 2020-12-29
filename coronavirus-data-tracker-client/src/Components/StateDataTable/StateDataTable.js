@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import { TableContainer, TablePagination } from '@material-ui/core';
 import './StateDataTable.css';
 
 class StateDataTable extends Component {
@@ -7,7 +8,9 @@ class StateDataTable extends Component {
     constructor() {
         super();
         this.state = {
-            data: {}
+            data: {},
+            page: 0,
+            rowsPerPage: 10
         };
     }
 
@@ -36,7 +39,9 @@ class StateDataTable extends Component {
     numberWithCommas = (number) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     tableData = () => {
-        const { data, title } = this.props;
+        const { title } = this.props;
+        const { page, rowsPerPage } = this.state;
+        const data = [...this.props.data].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
         const tableData = [];
         const { totalCases, totalDeaths } = this.totalData();
         const isMarginalDataTable = title.includes('Marginal');
@@ -77,26 +82,52 @@ class StateDataTable extends Component {
             }
             sortedData = isReverse ? dataToSort.sort((a, b) => (a[sortBy] < b[sortBy] ? -1 : 1)) : dataToSort.sort((a, b) => (a[sortBy] < b[sortBy] ? 1 : -1));
             this.setState({
-                data: sortedData
+                data: sortedData,
+                page: 0
             });
         }
     }
 
+    handlePageChange = (e, page) => {
+        this.setState({
+            page
+        });
+    }
+
+    handleChangeRowsPerPage = (page) => {
+        this.setState({
+            rowsPerPage: +page,
+            page: 0
+        });
+    }
+
     render() {
-        const { title } = this.props;
+        const { data, title } = this.props;
+        const { page, rowsPerPage } = this.state;
         return (
             <div className='state-data-table'>
                 <h3 className='state-data-table-header'>
                     <span>{title}</span>
                 </h3>
-                <MDBTable>
-                    <MDBTableHead>
-                        {this.tableHeader()}
-                    </MDBTableHead>
-                    <MDBTableBody>
-                        {this.tableData()}
-                    </MDBTableBody>
-                </MDBTable>
+                <TableContainer>
+                    <MDBTable>
+                        <MDBTableHead>
+                            {this.tableHeader()}
+                        </MDBTableHead>
+                        <MDBTableBody>
+                            {this.tableData()}
+                        </MDBTableBody>
+                    </MDBTable>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25, 50]}
+                    component='div'
+                    count={data.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={this.handlePageChange}
+                    onChangeRowsPerPage={(e) => this.handleChangeRowsPerPage(e.target.value)}
+                />
             </div>
         );
     }
