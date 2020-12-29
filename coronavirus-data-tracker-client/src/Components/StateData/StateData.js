@@ -22,9 +22,8 @@ class StateData extends Component {
     formatData = () => {
         const { title } = this.props;
         const { currentState } = store.getState().stateData;
-        let data = title.includes('Total') ? store.getState().data.totalStateData[currentState] : store.getState().data.marginalStateData[currentState];
+        let data = title.includes('Total') ? [...store.getState().data.totalStateData[currentState]] : [...store.getState().data.marginalStateData[currentState]];
         if (data === undefined) return [];
-        data = data.sort((a, b) => (a.date > b.date ? 1 : -1));
         return data;
     }
 
@@ -32,13 +31,16 @@ class StateData extends Component {
 
     render() {
         let title = this.props.title + store.getState().stateData.currentState;
+        const rawData = this.formatData();
+        const tableData = [...rawData].sort((a, b) => (a.date < b.date ? 1 : -1));
+        const chartData = this.minimizeDataSet(rawData);
         return (
             <React.Fragment>
                 <StateSelection pageTitle={title} />
-                <StateDataTable data={this.formatData()} title={title} />
-                <SplineChart data={this.minimizeDataSet(this.formatData())} title={title} />
-                <LineChart data={this.minimizeDataSet(this.formatData())} title={title} />
-                <BarChart data={this.minimizeDataSet(this.formatData())} title={title} />
+                <StateDataTable data={tableData} title={title} />
+                <SplineChart data={chartData} title={title} />
+                <LineChart data={chartData} title={title} />
+                <BarChart data={chartData} title={title} />
             </React.Fragment>
         );
     }
