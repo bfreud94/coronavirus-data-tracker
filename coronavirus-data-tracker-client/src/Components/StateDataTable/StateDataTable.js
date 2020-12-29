@@ -13,9 +13,9 @@ class StateDataTable extends Component {
 
     tableHeader = () => (
         <tr className='state-data-table-column-header'>
-            <th className='state-data-table-column-header-date' title='date' onClick={this.sortByColumn}>Date</th>
-            <th className='state-data-table-column-header-cases' title='cases' onClick={this.sortByColumn}>Cases</th>
-            <th className='state-data-table-column-header-deaths' title='deaths' onClick={this.sortByColumn}>Deaths</th>
+            <th className='state-data-table-column-header-date' title='date' onClick={(e) => this.sortByColumn(e.currentTarget.title)}>Date</th>
+            <th className='state-data-table-column-header-cases' title='cases' onClick={(e) => this.sortByColumn(e.currentTarget.title)}>Cases</th>
+            <th className='state-data-table-column-header-deaths' title='deaths' onClick={(e) => this.sortByColumn(e.currentTarget.title)}>Deaths</th>
         </tr>
     );
 
@@ -65,9 +65,8 @@ class StateDataTable extends Component {
         );
     }
 
-    sortByColumn = (e) => {
+    sortByColumn = (sortBy) => {
         let sortedData = [];
-        const sortBy = e.currentTarget === undefined ? e : e.currentTarget.title;
         const dataToSort = this.state.data.length > 0 ? this.state.data : this.props.data;
         let isReverse = false;
         if (dataToSort !== undefined && dataToSort.length > 0) {

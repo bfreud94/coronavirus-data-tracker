@@ -39,9 +39,9 @@ export class USADataTable extends Component {
 
     tableHeader = () => (
         <tr className='usa-data-table-column-header'>
-            {this.props.title.includes('States') ? <th title='state' className='usa-data-table-column-header-state' onClick={this.sortByColumn}>State</th> : <th title='date' className='usa-data-table-column-header-date' onClick={this.sortByColumn}>Date</th>}
-            <th title='cases' className='usa-data-table-column-header-cases' onClick={this.sortByColumn}>Cases</th>
-            <th title='deaths' className='usa-data-table-column-header-deaths' onClick={this.sortByColumn}>Deaths</th>
+            {this.props.title.includes('States') ? <th title='state' className='usa-data-table-column-header-state' onClick={(e) => this.sortByColumn(e.currentTarget.title)}>State</th> : <th title='date' className='usa-data-table-column-header-date' onClick={this.sortByColumn}>Date</th>}
+            <th title='cases' className='usa-data-table-column-header-cases' onClick={(e) => this.sortByColumn(e.currentTarget.title)}>Cases</th>
+            <th title='deaths' className='usa-data-table-column-header-deaths' onClick={(e) => this.sortByColumn(e.currentTarget.title)}>Deaths</th>
         </tr>
     );
 
@@ -76,6 +76,9 @@ export class USADataTable extends Component {
                     <td>{this.numberWithCommas(totalDeaths)}</td>
                 </tr>
             );
+        }
+        if (this.state.data.length === 0 && data.length > 0) {
+            
         }
         if (Array.isArray(data)) {
             data.forEach((date, index) => {
@@ -112,9 +115,8 @@ export class USADataTable extends Component {
         };
     }
 
-    sortByColumn = (e) => {
+    sortByColumn = (sortBy) => {
         let sortedData = [];
-        const sortBy = e.currentTarget === undefined ? e : e.currentTarget.title;
         const dataToSort = this.state.data.length > 0 ? this.state.data : this.props.tableData;
         let isReverse = false;
         if (dataToSort !== undefined && dataToSort.length > 0) {
