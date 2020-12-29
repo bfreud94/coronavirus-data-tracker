@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { withStyles } from '@material-ui/styles';
-import Button from '@material-ui/core/Button';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { Button, TableContainer, TablePagination } from '@material-ui/core';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { getMarginalStatesDataForDate } from '../../actions/dataActions';
 import { changeDate } from '../../actions/dateActions';
 import 'date-fns';
@@ -29,7 +29,9 @@ export class USADataTable extends Component {
     constructor() {
         super();
         this.state = {
-            data: []
+            data: [],
+            page: 0,
+            rowsPerPage: 10
         };
     }
 
@@ -63,7 +65,8 @@ export class USADataTable extends Component {
 
     tableData = () => {
         const { title } = this.props;
-        const data = this.props.tableData;
+        const { page, rowsPerPage } = this.state;
+        const data = [...this.props.tableData].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
         const tableDataElements = [];
         const { totalCases, totalDeaths } = this.totalData();
         if (title.includes('Marginal')) {
@@ -126,7 +129,8 @@ export class USADataTable extends Component {
             }
             sortedData = isReverse ? dataToSort.sort((a, b) => (a[sortBy] < b[sortBy] ? -1 : 1)) : dataToSort.sort((a, b) => (a[sortBy] < b[sortBy] ? 1 : -1));
             this.setState({
-                data: sortedData
+                data: sortedData,
+                page: 0
             });
         }
     }
@@ -161,8 +165,22 @@ export class USADataTable extends Component {
         );
     }
 
+    handlePageChange = (e, page) => {
+        this.setState({
+            page
+        });
+    }
+
+    handleChangeRowsPerPage = (page) => {
+        this.setState({
+            rowsPerPage: +page,
+            page: 0
+        });
+    }
+
     render() {
         const { tableData, title } = this.props;
+        const { page, rowsPerPage } = this.state;
         const date = moment(store.getState().date).format('MM-DD');
         const isTotalData = title.includes('Total');
         return (
@@ -171,15 +189,26 @@ export class USADataTable extends Component {
                     <span>{`${title}` + (isTotalData ? '' : ' for ' + moment(date, 'MM-DD').format('MMM Do'))}</span>
                     {isTotalData ? this.tableButtons() : this.datePicker()}
                 </h3>
-                <MDBTable style={this.tableBodyStyles()}>
-                    <MDBTableHead>
-                        {this.tableHeader()}
-                    </MDBTableHead>
-                    <MDBTableBody>
-                        {tableData !== undefined && tableData.length !== 0 ? this.tableData()
-                        : <tr><td><Loader className='usa-data-table-loader' type='TailSpin' color='blue' /></td></tr>}
-                    </MDBTableBody>
-                </MDBTable>
+                <TableContainer>
+                    <MDBTable style={this.tableBodyStyles()}>
+                        <MDBTableHead>
+                            {this.tableHeader()}
+                        </MDBTableHead>
+                        <MDBTableBody>
+                            {tableData !== undefined && tableData.length !== 0 ? this.tableData()
+                            : <tr><td><Loader className='usa-data-table-loader' type='TailSpin' color='blue' /></td></tr>}
+                        </MDBTableBody>
+                    </MDBTable>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25, 50]}
+                    component='div'
+                    count={tableData.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={this.handlePageChange}
+                    onChangeRowsPerPage={(e) => this.handleChangeRowsPerPage(e.target.value)}
+                />
             </div>
         );
     }
