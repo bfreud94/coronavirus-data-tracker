@@ -64,11 +64,9 @@ export class USADataTable extends Component {
     tableData = () => {
         const { title } = this.props;
         const data = this.props.tableData;
-        const isStatesDataTable = title.includes('States');
-        const isMarginalDataTable = title.includes('Marginal');
         const tableDataElements = [];
         const { totalCases, totalDeaths } = this.totalData();
-        if (isMarginalDataTable) {
+        if (title.includes('Marginal')) {
             tableDataElements.push(
                 <tr className='usa-data-table-row' key={0}>
                     <td>Total Data</td>
@@ -77,14 +75,11 @@ export class USADataTable extends Component {
                 </tr>
             );
         }
-        if (this.state.data.length === 0 && data.length > 0) {
-            
-        }
         if (Array.isArray(data)) {
             data.forEach((date, index) => {
                 tableDataElements.push(
                     <tr className='usa-data-table-row' key={index + 1}>
-                        <td>{isStatesDataTable ? date.state : date.date}</td>
+                        <td>{title.includes('States') ? date.state : date.date}</td>
                         <td>{this.numberWithCommas(date.cases)}</td>
                         <td>{this.numberWithCommas(date.deaths)}</td>
                     </tr>
