@@ -27,8 +27,8 @@ class USAData extends Component {
         if (states.length === 1) this.props.getStates();
         if (totalDataUSA.length === 0 && title.includes('Total')) this.props.getTotalDataUSA();
         if (marginalDataUSA.length === 0 && title.includes('Marginal')) this.props.getMarginalDataUSA();
-        if (title.includes('Total') && (Object.keys(totalStatesDataForDate).length === 0 || totalStatesDataForDate[date.substring(5)].length === 0)) this.props.getTotalStatesDataForDate(date);
-        if (title.includes('Marginal') && (Object.keys(marginalStatesDataForDate).length === 0 || marginalStatesDataForDate[date.substring(5)].length === 0)) this.props.getMarginalStatesDataForDate(date);
+        if (title.includes('Total') && (Object.keys(totalStatesDataForDate).length === 0 || totalStatesDataForDate[date].length === 0)) this.props.getTotalStatesDataForDate(date);
+        if (title.includes('Marginal') && (Object.keys(marginalStatesDataForDate).length === 0 || marginalStatesDataForDate[date].length === 0)) this.props.getMarginalStatesDataForDate(date);
     }
 
     minimizeDataSet = (data) => data.filter((date, index) => index % 7 === 0);
@@ -47,7 +47,7 @@ class USAData extends Component {
 
     getDataForSpecificDate = () => {
         const { title } = this.props;
-        const date = moment(store.getState().date).format('MM-DD');
+        const date = moment(store.getState().date).format('YYYY-MM-DD');
         const { totalStatesDataForDate, marginalStatesDataForDate } = store.getState().data;
         if (title.includes('Total')) {
             if (Object.keys(totalStatesDataForDate).length === 0) return [];
