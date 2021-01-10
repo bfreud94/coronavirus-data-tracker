@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import StateSelection from '../StateSelection/StateSelection';
 import SplineChart from '../SplineChart/SplineChart';
 import LineChart from '../LineChart/LineChart';
@@ -15,16 +16,32 @@ class StateData extends Component {
         const { title } = this.props;
         const { currentState } = store.getState().stateData;
         const { totalStateData, marginalStateData } = store.getState().data;
-        if (title.includes('Total') && totalStateData[currentState].length === 0) this.props.getTotalStateData(currentState);
-        if (title.includes('Marginal') && marginalStateData[currentState].length === 0) this.props.getMarginalStateData(currentState);
+        if (title.includes('Total')) {
+            if (!_.isEmpty(totalStateData)) {
+                if (title.includes('Total') && totalStateData[currentState].length === 0) this.props.getTotalStateData(currentState);
+            }
+        } else {
+            if (!_.isEmpty(marginalStateData)) {
+                if (title.includes('Marginal') && marginalStateData[currentState].length === 0) this.props.getMarginalStateData(currentState);
+        
+            }
+
+        }
     }
 
     formatData = () => {
         const { title } = this.props;
-        const { currentState } = store.getState().stateData;
-        let data = title.includes('Total') ? [...store.getState().data.totalStateData[currentState]] : [...store.getState().data.marginalStateData[currentState]];
-        if (data === undefined) return [];
-        return data;
+        const { data, stateData } = store.getState();
+        const { marginalStateData, totalStateData } = data;
+        const { currentState } = stateData;
+        if (title.includes('Total')) {
+            if (_.isEmpty(totalStateData)) return [];
+        } else {
+            if (_.isEmpty(marginalStateData)) return [];
+        }
+        let formattedData = title.includes('Total') ? [...totalStateData[currentState]] : [...marginalStateData[currentState]];
+        if (formattedData === undefined) return [];
+        return formattedData;
     }
 
     minimizeDataSet = (data) => data.filter((date, index) => index % 7 === 0);
