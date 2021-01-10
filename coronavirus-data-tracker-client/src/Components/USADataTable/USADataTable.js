@@ -81,7 +81,7 @@ export class USADataTable extends Component {
         if (Array.isArray(data)) {
             data.forEach((date, index) => {
                 tableDataElements.push(
-                    <tr className='usa-data-table-row' key={index + 1}>
+                    <tr className={`${index % 2 === 0 ? `usa-data-table-odd-row` : 'usa-data-table-even-row'}`} key={index + 1}>
                         <td>{title.includes('States') ? date.state : date.date}</td>
                         <td>{this.numberWithCommas(date.cases)}</td>
                         <td>{this.numberWithCommas(date.deaths)}</td>

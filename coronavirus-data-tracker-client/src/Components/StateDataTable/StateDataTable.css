@@ -11,7 +11,11 @@
 .state-data-table-column-header {
     text-align: center;
 }
-.state-data-table-row {
+.state-data-table-odd-row {
+    background-color: #e7f3c5;
+    text-align: center;
+}
+.state-data-table-even-row {
     text-align: center;
 }
 .state-data-table-top-row {

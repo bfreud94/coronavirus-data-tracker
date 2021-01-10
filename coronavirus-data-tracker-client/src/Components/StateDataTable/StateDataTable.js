@@ -56,7 +56,7 @@ class StateDataTable extends Component {
         }
         data.forEach((date, index) => {
             tableData.push(
-                <tr className='state-data-table-row' key={index + 1}>
+                <tr className={`${index % 2 === 0 ? `state-data-table-odd-row` : 'state-data-table-even-row'}`} style={{ backgroundColor: index % 2 === 0 ? '#e7f3c5' : ''}} key={index + 1}>
                     <td>{date.date}</td>
                     <td>{this.numberWithCommas(date.cases)}</td>
                     <td>{this.numberWithCommas(date.deaths)}</td>
