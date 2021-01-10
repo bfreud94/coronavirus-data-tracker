@@ -47,7 +47,7 @@ class StateDataTable extends Component {
         const isMarginalDataTable = title.includes('Marginal');
         if (isMarginalDataTable) {
             tableData.push(
-                <tr className='state-data-table-row' key={0}>
+                <tr className='state-data-table-top-row' key={0}>
                     <td>Total Data</td>
                     <td>{this.numberWithCommas(totalCases)}</td>
                     <td>{this.numberWithCommas(totalDeaths)}</td>

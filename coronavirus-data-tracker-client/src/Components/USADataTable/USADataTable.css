@@ -26,6 +26,10 @@
 .usa-data-table-row {
     text-align: center;
 }
+.usa-data-table-top-row {
+    background-color: #bdc196;
+    text-align: center;    
+}
 .usa-data-table-column-header {
     text-align: center;
 }

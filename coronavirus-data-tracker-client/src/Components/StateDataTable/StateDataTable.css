@@ -14,6 +14,10 @@
 .state-data-table-row {
     text-align: center;
 }
+.state-data-table-top-row {
+    background-color: #bdc196;
+    text-align: center;
+}
 .state-data-table-column-header-date {
     cursor: pointer;
 }

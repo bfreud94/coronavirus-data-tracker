@@ -71,7 +71,7 @@ export class USADataTable extends Component {
         const { totalCases, totalDeaths } = this.totalData();
         if (title.includes('Marginal')) {
             tableDataElements.push(
-                <tr className='usa-data-table-row' key={0}>
+                <tr className='usa-data-table-top-row' key={0}>
                     <td>Total Data</td>
                     <td>{this.numberWithCommas(totalCases)}</td>
                     <td>{this.numberWithCommas(totalDeaths)}</td>
