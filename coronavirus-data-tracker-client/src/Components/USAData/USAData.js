@@ -42,7 +42,9 @@ class USAData extends Component {
     getData = () => {
         const { title } = this.props;
         const { totalDataUSA, marginalDataUSA } = store.getState().data;
-        return title.includes('Total') ? totalDataUSA : marginalDataUSA;
+        let data = title.includes('Total') ? totalDataUSA : marginalDataUSA;
+        if (data.length === 0) return data;
+        return [...data].map((dataForDate) => ({...dataForDate, date: moment(dataForDate.date).format('MM-DD')}));
     }
 
     getDataForSpecificDate = () => {

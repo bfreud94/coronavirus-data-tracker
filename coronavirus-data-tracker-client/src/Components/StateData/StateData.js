@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import moment from 'moment';
 import StateSelection from '../StateSelection/StateSelection';
 import SplineChart from '../SplineChart/SplineChart';
 import LineChart from '../LineChart/LineChart';
@@ -44,7 +45,10 @@ class StateData extends Component {
         return formattedData;
     }
 
-    minimizeDataSet = (data) => data.filter((date, index) => index % 7 === 0);
+    minimizeDataSet = (data) => {
+        if (data.length === 0) return data;
+        return data.filter((date, index) => index % 7 === 0).map((dataForDate) => ({...dataForDate, date: moment(dataForDate.date).format('MM-DD')}));
+    };
 
     render() {
         let title = this.props.title + store.getState().stateData.currentState;
