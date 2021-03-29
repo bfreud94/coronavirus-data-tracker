@@ -31,7 +31,7 @@ class USAData extends Component {
         if (title.includes('Marginal') && (Object.keys(marginalStatesDataForDate).length === 0 || marginalStatesDataForDate[date].length === 0)) this.props.getMarginalStatesDataForDate(date);
     }
 
-    minimizeDataSet = (data) => data.filter((date, index) => index % 7 === 0);
+    minimizeDataSet = (data) => data.filter(({ date }) => date.substring(3, 5) === '01');
 
     onHeaderButtonClick = (e) => {
         this.setState({
@@ -44,7 +44,7 @@ class USAData extends Component {
         const { totalDataUSA, marginalDataUSA } = store.getState().data;
         let data = title.includes('Total') ? totalDataUSA : marginalDataUSA;
         if (data.length === 0) return data;
-        return [...data].map((dataForDate) => ({...dataForDate, date: moment(dataForDate.date).format('MM-DD')}));
+        return [...data].map((dataForDate) => ({...dataForDate, date: moment(dataForDate.date).format('MM-DD-YYYY')}));
     }
 
     getDataForSpecificDate = () => {
@@ -52,7 +52,7 @@ class USAData extends Component {
         const date = moment(store.getState().date).format('YYYY-MM-DD');
         const { totalStatesDataForDate, marginalStatesDataForDate } = store.getState().data;
         if (title.includes('Total')) {
-            if (Object.keys(totalStatesDataForDate).length === 0) return [];
+            if (!totalStatesDataForDate[date] || Object.keys(totalStatesDataForDate).length === 0) return [];
             return [...totalStatesDataForDate[date]].sort((a, b) => a.cases > b.cases ? -1 : 1);
         } else {
             return marginalStatesDataForDate[date] === undefined || marginalStatesDataForDate[date].length === 0 ? [] : [...marginalStatesDataForDate[date]].sort((a, b) => a.cases > b.cases ? -1 : 1);
@@ -63,7 +63,8 @@ class USAData extends Component {
         const { title } = this.props;
         const { totalStatesDataIsVisible } = this.state;
         const data = this.getData();
-        const tableData = [...data].sort((a, b) => a.date > b.date ? -1 : 1);
+        const tableData = [...data].sort((a, b) =>
+            moment(a.date, 'MM-DD-YYYY').diff(moment(b.date, 'MM-DD-YYYY'), 'days') > 0 ? -1 : 1);
         const dateData = this.getDataForSpecificDate();
         return (
             <React.Fragment>

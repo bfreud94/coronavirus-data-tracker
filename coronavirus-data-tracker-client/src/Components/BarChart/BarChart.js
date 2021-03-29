@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Chart, ArgumentAxis, ValueAxis, BarSeries, Legend, ZoomAndPan } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, ArgumentAxis, ValueAxis, BarSeries, Legend } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import { Stack } from '@devexpress/dx-react-chart';
+import { ValueScale } from '@devexpress/dx-react-chart';
 import './BarChart.css';
 
 const barChartStyles = () => ({
     chart: {
         paddingRight: '20px',
-        width: '2000px'
+        width: '1250px'
     }
 });
 
@@ -38,10 +39,18 @@ const legendLabelBase = ({ classes, ...restProps }) => (
 
 const Label = withStyles(legendLabelStyles, { name: 'LegendLabel' })(legendLabelBase);
 
+const getMax = (data) => {
+    return Math.max.apply(
+        Math,
+        data.map(({ cases }) => cases)
+    ) * 1.1;
+};
+
 class BarChart extends Component {
 
     render() {
         const { classes, data, title } = this.props;
+        const max = data && data.length > 0 ? getMax(data) : 1;
         return (
             <div className='barChart-wrapper'>
                 <h3 className='barChart-title'>{title}</h3>
@@ -50,11 +59,11 @@ class BarChart extends Component {
                     <Chart data={data} className={classes.chart}>
                         <ArgumentAxis />
                         <ValueAxis />
+                        <ValueScale modifyDomain={() => [0, max]} />
                         <BarSeries name='Cases' valueField='cases' argumentField='date' />
                         <BarSeries name='Deaths' valueField='deaths' argumentField='date' />
                         <Legend position='bottom' rootComponent={Root} labelComponent={Label} />
                         <Stack />
-                        <ZoomAndPan />
                     </Chart>
                 )
                 : <React.Fragment />}

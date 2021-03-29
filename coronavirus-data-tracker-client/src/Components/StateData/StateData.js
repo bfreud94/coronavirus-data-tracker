@@ -47,7 +47,7 @@ class StateData extends Component {
 
     minimizeDataSet = (data) => {
         if (data.length === 0) return data;
-        return data.filter((date, index) => index % 7 === 0).map((dataForDate) => ({...dataForDate, date: moment(dataForDate.date).format('MM-DD')}));
+        return data.filter((date, index) => index % 30 === 0).map((dataForDate) => ({...dataForDate, date: moment(dataForDate.date).format('MM-DD-YYYY')}));
     };
 
     render() {

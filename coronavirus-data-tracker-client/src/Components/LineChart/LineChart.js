@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Chart, ArgumentAxis, ValueAxis, LineSeries, Legend, ZoomAndPan } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, ArgumentAxis, ValueAxis, LineSeries, Legend } from '@devexpress/dx-react-chart-material-ui';
+import { ValueScale } from '@devexpress/dx-react-chart';
 import { withStyles } from '@material-ui/core/styles';
 import './LineChart.css';
 
@@ -44,7 +45,7 @@ const Item = withStyles(legendItemStyles, { name: 'LegendItem' })(legendItemBase
 const lineChartStyles = () => ({
     chart: {
         paddingRight: '20px',
-        width: '2000px'
+        width: '1250px'
     }
 });
 
@@ -55,10 +56,18 @@ const ValueLabel = (props) => {
     );
 };
 
+const getMax = (data) => {
+    return Math.max.apply(
+        Math,
+        data.map(({ cases }) => cases)
+    ) * 1.1;
+};
+
 class LineChart extends Component {
 
     render() {
         const { classes, data, title } = this.props;
+        const max = data && data.length > 0 ? getMax(data) : 1;
         return (
             <div className='lineChart-wrapper'>
                 <h3 className='lineChart-title'>{title}</h3>
@@ -67,10 +76,10 @@ class LineChart extends Component {
                     <Chart data={data} className={classes.chart}>
                         <ArgumentAxis />
                         <ValueAxis max={50} labelComponent={ValueLabel} />
+                        <ValueScale modifyDomain={() => [0, max]} />
                         <LineSeries name='Cases' valueField='cases' argumentField='date' />
                         <LineSeries name='Deaths' valueField='deaths' argumentField='date' />
                         <Legend position='bottom' rootComponent={Root} itemComponent={Item} labelComponent={Label} />
-                        <ZoomAndPan />
                     </Chart>
                     )
                 : <React.Fragment />}

@@ -37,7 +37,7 @@ export default function (state = initialState, action) {
         }
         case GET_TOTAL_STATES_DATA_FOR_DATE: {
             Object.keys(state.totalStatesDataForDate).forEach((date) => {
-                if (date.toString() === action.payload[0].date.toString()) state.totalStatesDataForDate[date] = action.payload;
+                if (action.payload.length > 0 && date.toString() === action.payload[0].date.toString()) state.totalStatesDataForDate[date] = action.payload;
             });
             return {
                 ...state,

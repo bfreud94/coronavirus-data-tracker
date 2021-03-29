@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Chart, ArgumentAxis, ValueAxis, AreaSeries, Legend, ZoomAndPan } from '@devexpress/dx-react-chart-material-ui';
+import { Chart, ArgumentAxis, ValueAxis, AreaSeries, Legend } from '@devexpress/dx-react-chart-material-ui';
 import { withStyles } from '@material-ui/core/styles';
 import { curveCatmullRom, area } from 'd3-shape';
 import Loader from 'react-loader-spinner';
+import { ValueScale } from '@devexpress/dx-react-chart';
 import './SplineChart.css';
 
 const legendStyles = () => ({
@@ -35,7 +36,7 @@ const Label = withStyles(legendLabelStyles, { name: 'LegendLabel' })(legendLabel
 const splineChartStyles = () => ({
     chart: {
         paddingRight: '20px',
-        width: '2000px'
+        width: '1250px'
     }
 });
 
@@ -51,10 +52,18 @@ const Area = (props) => (
     />
 );
 
+const getMax = (data) => {
+    return Math.max.apply(
+        Math,
+        data.map(({ cases }) => cases)
+    ) * 1.1;
+};
+
 class SplineChart extends React.Component {
 
     render() {
         const { classes, data, title } = this.props;
+        const max = data && data.length > 0 ? getMax(data) : 1;
         return (
             <div className='splineChart-wrapper'>
                 <h3 className='splineChart-title'>{title}</h3>
@@ -63,10 +72,10 @@ class SplineChart extends React.Component {
                         <Chart data={data} className={classes.chart}>
                             <ArgumentAxis tickFormat={format} />
                             <ValueAxis />
+                            <ValueScale modifyDomain={() => [0, max]} />
                             <AreaSeries name='Cases' valueField='cases' argumentField='date' seriesComponent={Area} />
                             <AreaSeries name='Deaths' valueField='deaths' argumentField='date' seriesComponent={Area} />
                             <Legend position='bottom' rootComponent={Root} labelComponent={Label} />
-                            <ZoomAndPan />
                         </Chart>
                     )
                     : <Loader className='splineChart-loader' type='TailSpin' color='blue' /> }
