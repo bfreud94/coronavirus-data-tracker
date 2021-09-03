@@ -105,19 +105,21 @@ router.get('/totalStatesDataForDate/:date', async (request, response, next) => {
 
 router.get('/marginalStatesDataForDate/:date', async (request, response, next) => {
     try {
-        const { date } = request.params;
-        if (!isValidDateFormat(date)) throw new Error('Invalid date');
-        let data = await (await fetch('https://api.covidtracking.com/v1/states/daily.json')).json();
-        data = data.filter((item) => convertToDate(item.date) === date && !nonStates.includes(item.state));
-        data = data.map((item) => ({
-            date,
-            state: states.filter((state) => statesToAbbreviations[state] === item.state)[0],
-            cases: item.positiveIncrease === null ? 0 : item.positiveIncrease,
-            deaths: item.deathIncrease === null ? 0 : item.deathIncrease
-        }));
-        response.send(
-            data
-        );
+        if (!isValidDateFormat(request.params.date)) throw new Error('Invalid date');
+        let data = await (await fetch('https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv')).text();
+        data = data.split('\n').map((item) => {
+            const [date, , state, cases, , , deaths] = item.split(',');
+            return {
+                date,
+                state,
+                cases: cases === '' ? 0 : parseInt(cases, 10),
+                deaths: deaths === '' ? 0 : parseInt(deaths, 10)
+            };
+        });
+        data.shift();
+        data = data.filter((item) => item.date === request.params.date);
+        if (data.length === 0) throw new Error('Invalid date');
+        response.send(data);
     } catch (error) {
         next(error);
     }
