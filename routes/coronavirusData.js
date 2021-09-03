@@ -8,13 +8,17 @@ const router = express.Router();
 
 router.get('/totalDataUSA', async (request, response, next) => {
     try {
-        let data = await (await fetch('https://api.covidtracking.com/v1/us/daily.json')).json();
-        data = data.map((item) => ({
-            date: convertToDate(item.date),
-            cases: item.positive === null ? 0 : item.positive,
-            deaths: item.death === null ? 0 : item.death
-        }));
-        response.send(data.reverse());
+        let data = await (await fetch('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv')).text();
+        data = data.split('\n').map((item) => {
+            const [date, cases, deaths] = item.split(',');
+            return {
+                date,
+                cases: cases === '' ? 0 : parseInt(cases, 10),
+                deaths: deaths === '' ? 0 : parseInt(deaths, 10)
+            };
+        });
+        data.shift();
+        response.send(data);
     } catch (error) {
         next(error);
     }
