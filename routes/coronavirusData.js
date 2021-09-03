@@ -68,17 +68,21 @@ router.get('/totalDataByState/:state', async (request, response, next) => {
 
 router.get('/marginalDataByState/:state', async (request, response, next) => {
     try {
-        const { state } = request.params;
-        if (!states.includes(state)) throw new Error('Invalid state');
-        let data = await (await fetch('https://api.covidtracking.com/v1/states/daily.json')).json();
-        data = data.filter((item) => !nonStates.includes(item.state) && item.state === statesToAbbreviations[state]);
-        data = data.map((item) => ({
-            date: convertToDate(item.date),
-            state: item.state,
-            cases: item.positiveIncrease,
-            deaths: item.deathIncrease
-        }));
-        response.send(data.reverse());
+        if (!states.includes(request.params.state)) throw new Error('Invalid state');;
+        let data = await (await fetch('https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-states.csv')).text();
+        data = data.split('\n').map((item) => {
+            const [date, , state, cases, , , deaths] = item.split(',');
+            return {
+                date,
+                state,
+                cases: cases === '' ? 0 : parseInt(cases, 10),
+                deaths: deaths === '' ? 0 : parseInt(deaths, 10)
+            };
+        });
+        data.shift();
+        data = data.filter((item) => item.state === request.params.state);
+        if (data.length === 0) throw new Error('Invalid state');
+        response.send(data);
     } catch (error) {
         next(error);
     }
