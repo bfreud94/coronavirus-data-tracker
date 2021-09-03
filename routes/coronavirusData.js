@@ -52,7 +52,7 @@ router.get('/totalDataByState/:state', async (request, response, next) => {
         if (!states.includes(request.params.state)) throw new Error('Invalid state');
         let data = await (await fetch('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv')).text();
         data = data.split('\n').map((item) => {
-            const [date, state, cases, deaths] = item.split(',');
+            const [date, state, , cases, deaths] = item.split(',');
             return {
                 date,
                 state,
