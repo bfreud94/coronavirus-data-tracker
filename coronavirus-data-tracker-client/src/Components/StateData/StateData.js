@@ -13,6 +13,15 @@ import store from '../../store';
 
 class StateData extends Component {
 
+    constructor() {
+        super();
+        this.state = {
+            data: {},
+            page: 0,
+            rowsPerPage: 10
+        };
+    }
+
     componentDidMount() {
         const { title } = this.props;
         const { currentState } = store.getState().stateData;
@@ -50,15 +59,44 @@ class StateData extends Component {
         return data.filter((date, index) => index % 30 === 0).map((dataForDate) => ({...dataForDate, date: moment(dataForDate.date).format('MM-DD-YYYY')}));
     };
 
+    resetPageCounter = () => {
+        this.setState({
+            rowsPerPage: 5,
+            page: 0
+        })
+    }
+
+    handlePageChange = (e, page) => {
+        this.setState({
+            page
+        });
+    }
+
+    handleChangeRowsPerPage = (page) => {
+        this.setState({
+            rowsPerPage: +page,
+            page: 0
+        });
+    }
+
+    sortData = (sortedData) => {
+        this.setState({
+            data: sortedData,
+            page: 0
+        })
+    }
+
     render() {
+        const { rowsPerPage, page} = this.state;
         let title = this.props.title + store.getState().stateData.currentState;
         const rawData = this.formatData();
         const tableData = [...rawData].sort((a, b) => (a.date < b.date ? 1 : -1));
         const chartData = this.minimizeDataSet(rawData);
         return (
             <React.Fragment>
-                <StateSelection pageTitle={title} />
-                <StateDataTable data={tableData} title={title} />
+                <StateSelection pageTitle={title} resetPageCounter={this.resetPageCounter} />
+                <StateDataTable data={tableData} title={title} rowsPerPage={rowsPerPage} page={page}
+                    handlePageChange={this.handlePageChange} handleChangeRowsPerPage={this.handleChangeRowsPerPage} sortData={this.sortData} />
                 <SplineChart data={chartData} title={title} />
                 <LineChart data={chartData} title={title} />
                 <BarChart data={chartData} title={title} />

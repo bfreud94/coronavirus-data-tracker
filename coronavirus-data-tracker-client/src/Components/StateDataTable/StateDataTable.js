@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { TableContainer, TablePagination } from '@material-ui/core';
 import './StateDataTable.css';
 
 class StateDataTable extends Component {
-
-    constructor() {
-        super();
-        this.state = {
-            data: {},
-            page: 0,
-            rowsPerPage: 10
-        };
-    }
 
     tableHeader = () => (
         <tr className='state-data-table-column-header'>
@@ -39,8 +31,7 @@ class StateDataTable extends Component {
     numberWithCommas = (number) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     tableData = () => {
-        const { title } = this.props;
-        const { page, rowsPerPage } = this.state;
+        const { title, page, rowsPerPage } = this.props;
         const data = [...this.props.data].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
         const tableData = [];
         const { totalCases, totalDeaths } = this.totalData();
@@ -71,6 +62,7 @@ class StateDataTable extends Component {
     }
 
     sortByColumn = (sortBy) => {
+        const { sortData } = this.props;
         let sortedData = [];
         const dataToSort = this.state.data.length > 0 ? this.state.data : this.props.data;
         let isReverse = false;
@@ -81,29 +73,12 @@ class StateDataTable extends Component {
                 isReverse = dataToSort[0][sortBy] > dataToSort[dataToSort.length - 1][sortBy];
             }
             sortedData = isReverse ? dataToSort.sort((a, b) => (a[sortBy] < b[sortBy] ? -1 : 1)) : dataToSort.sort((a, b) => (a[sortBy] < b[sortBy] ? 1 : -1));
-            this.setState({
-                data: sortedData,
-                page: 0
-            });
+            sortData(sortedData);
         }
     }
 
-    handlePageChange = (e, page) => {
-        this.setState({
-            page
-        });
-    }
-
-    handleChangeRowsPerPage = (page) => {
-        this.setState({
-            rowsPerPage: +page,
-            page: 0
-        });
-    }
-
     render() {
-        const { data, title } = this.props;
-        const { page, rowsPerPage } = this.state;
+        const { data, title, page, rowsPerPage, handlePageChange, handleChangeRowsPerPage } = this.props;
         return (
             <div className='state-data-table'>
                 <h3 className='state-data-table-header'>
@@ -125,12 +100,22 @@ class StateDataTable extends Component {
                     count={data.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
-                    onChangePage={this.handlePageChange}
-                    onChangeRowsPerPage={(e) => this.handleChangeRowsPerPage(e.target.value)}
+                    onChangePage={handlePageChange}
+                    onChangeRowsPerPage={(e) => handleChangeRowsPerPage(e.target.value)}
                 />
             </div>
         );
     }
 }
+
+StateDataTable.propTypes = {
+    data: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
+    page: PropTypes.number.isRequired,
+    handlePageChange: PropTypes.func.isRequired,
+    handleChangeRowsPerPage: PropTypes.func.isRequired,
+    sortData: PropTypes.func.isRequired
+};
 
 export default StateDataTable;

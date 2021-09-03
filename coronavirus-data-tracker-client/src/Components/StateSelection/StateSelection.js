@@ -32,7 +32,8 @@ class StateSelection extends Component {
     }
 
     changeCurrentState = (state) => {
-        const { pageTitle } = this.props;
+        const { pageTitle, resetPageCounter } = this.props;
+        resetPageCounter();
         const { totalStateData, marginalStateData } = store.getState().data;
         this.props.changeCurrentState(state);
         if (pageTitle.includes('Total') && totalStateData[state].length === 0) this.props.getTotalStateData(state);
@@ -68,7 +69,8 @@ StateSelection.propTypes = {
     changeCurrentState: PropTypes.func.isRequired,
     getTotalStateData: PropTypes.func.isRequired,
     getMarginalStateData: PropTypes.func.isRequired,
-    pageTitle: PropTypes.string.isRequired
+    pageTitle: PropTypes.string.isRequired,
+    resetPageCounter: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, { changeCurrentState, getTotalStateData, getMarginalStateData })(withStyles(styles)(StateSelection));
