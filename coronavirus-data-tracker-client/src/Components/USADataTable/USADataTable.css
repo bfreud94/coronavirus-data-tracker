@@ -5,8 +5,8 @@
     border-radius: 5px;
 }
 .usa-data-table-header {
-    margin: 0px 0px 0px 375px;
     padding: 20px 0px 20px 0px;
+    text-align: center;
 }
 .usa-data-table-date-picker-wrapper {
     float: right

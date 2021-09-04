@@ -5,8 +5,8 @@
     border-radius: 5px;
 }
 .state-data-table-header {
-    margin: 0px 0px 0px 400px;
     padding: 20px 0px 20px 0px;
+    text-align: center;
 }
 .state-data-table-column-header {
     text-align: center;
