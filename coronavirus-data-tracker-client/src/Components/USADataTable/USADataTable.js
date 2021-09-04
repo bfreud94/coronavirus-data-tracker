@@ -137,7 +137,7 @@ export class USADataTable extends Component {
 
     handleDateChange = (date) => {
         const firstDay = moment('2020-03-23').format('YYYY-MM-DD');
-        const lastDay = moment().format('YYYY-MM-DD');
+        const lastDay = moment().subtract(1, 'days').format('YYYY-MM-DD');
         if (moment(date).isBefore(firstDay)) date = firstDay;
         if (moment(date).isAfter(lastDay)) date = lastDay;
         this.props.getMarginalStatesDataForDate(moment(date).format('YYYY-MM-DD'));
