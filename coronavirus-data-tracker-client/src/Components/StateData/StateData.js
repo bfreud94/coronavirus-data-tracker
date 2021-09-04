@@ -16,9 +16,10 @@ class StateData extends Component {
     constructor() {
         super();
         this.state = {
-            data: {},
+            data: [],
             page: 0,
-            rowsPerPage: 10
+            rowsPerPage: 10,
+            sortKey: ''
         };
     }
 
@@ -33,9 +34,7 @@ class StateData extends Component {
         } else {
             if (!_.isEmpty(marginalStateData)) {
                 if (title.includes('Marginal') && marginalStateData[currentState].length === 0) this.props.getMarginalStateData(currentState);
-        
             }
-
         }
     }
 
@@ -79,19 +78,19 @@ class StateData extends Component {
         });
     }
 
-    sortData = (sortedData) => {
+    sortData = (data, sortKey) => {
         this.setState({
-            data: sortedData,
-            page: 0
+            data,
+            page: 0,
+            sortKey
         })
     }
 
     render() {
-        const { rowsPerPage, page} = this.state;
+        const { rowsPerPage, page } = this.state;
         let title = this.props.title + store.getState().stateData.currentState;
-        const rawData = this.formatData();
-        const tableData = [...rawData].sort((a, b) => (a.date < b.date ? 1 : -1));
-        const chartData = this.minimizeDataSet(rawData);
+        const tableData = this.state.data.length > 0 ? this.state.data : this.formatData();
+        const chartData = this.minimizeDataSet(tableData);
         return (
             <React.Fragment>
                 <StateSelection pageTitle={title} resetPageCounter={this.resetPageCounter} />
@@ -107,7 +106,6 @@ class StateData extends Component {
 
 const mapStateToProps = (state) => ({
     data: state.data,
-    state: state.state,
     stateData: state.stateData
 });
 

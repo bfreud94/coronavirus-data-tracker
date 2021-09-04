@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import moment from 'moment';
 import { TableContainer, TablePagination } from '@material-ui/core';
 import './StateDataTable.css';
 
@@ -62,18 +63,17 @@ class StateDataTable extends Component {
     }
 
     sortByColumn = (sortBy) => {
-        const { sortData } = this.props;
+        const { data, sortData } = this.props;
         let sortedData = [];
-        const dataToSort = this.state.data.length > 0 ? this.state.data : this.props.data;
         let isReverse = false;
-        if (dataToSort !== undefined && dataToSort.length > 0) {
+        if (data !== undefined && data.length > 0) {
             if (sortBy === 'date') {
-                isReverse = parseInt(dataToSort[0][sortBy].substring(0, 2)) > parseInt(dataToSort[dataToSort.length - 1][sortBy].substring(0, 2));
+                isReverse = moment(data[0][sortBy]).isAfter(moment(data[data.length - 1][sortBy])) ? true : isReverse;
             } else {
-                isReverse = dataToSort[0][sortBy] > dataToSort[dataToSort.length - 1][sortBy];
+                isReverse = data[0][sortBy] > data[data.length - 1][sortBy];
             }
-            sortedData = isReverse ? dataToSort.sort((a, b) => (a[sortBy] < b[sortBy] ? -1 : 1)) : dataToSort.sort((a, b) => (a[sortBy] < b[sortBy] ? 1 : -1));
-            sortData(sortedData);
+            sortedData = isReverse ? data.sort((a, b) => (a[sortBy] < b[sortBy] ? -1 : 1)) : data.sort((a, b) => (a[sortBy] < b[sortBy] ? 1 : -1));
+            sortData(sortedData, sortBy);
         }
     }
 
