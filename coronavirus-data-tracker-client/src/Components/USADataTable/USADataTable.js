@@ -136,7 +136,7 @@ export class USADataTable extends Component {
     }
 
     handleDateChange = (date) => {
-        const firstDay = moment('2020-03-23').format('YYYY-MM-DD');
+        const firstDay = moment('2020-01-21').format('YYYY-MM-DD');
         const lastDay = moment().subtract(1, 'days').format('YYYY-MM-DD');
         if (moment(date).isBefore(firstDay)) date = firstDay;
         if (moment(date).isAfter(lastDay)) date = lastDay;
@@ -217,8 +217,7 @@ export class USADataTable extends Component {
 }
 const mapStateToProps = (state) => ({
     data: state.data,
-    date: state.date,
-    states: state.states
+    date: state.date
 });
 
 USADataTable.propTypes = {

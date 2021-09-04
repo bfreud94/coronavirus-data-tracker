@@ -124,6 +124,18 @@ router.get('/marginalStatesDataForDate/:date', async (request, response, next) =
         data.shift();
         data = data.filter((item) => item.date === request.params.date);
         if (data.length === 0) throw new Error('Invalid date');
+        if (data.length !== states.length) {
+            states.forEach((state) => {
+                if (!data.some((item) => item.state === state)) {
+                    data.push({
+                        date: request.params.date,
+                        state,
+                        cases: 0,
+                        deaths: 0
+                    });
+                }
+            });
+        }
         response.send(data);
     } catch (error) {
         next(error);

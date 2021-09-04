@@ -6,7 +6,7 @@ export const getTotalDataUSA = () => async (dispatch) => {
     const response = await (await fetch(`${serverUri}/api/totalDataUSA`)).json();
     dispatch({
         type: GET_TOTAL_USA_DATA,
-        payload: response.splice(70, response.length).map((date) => ({ date: date.date, cases: date.cases, deaths: date.deaths }))
+        payload: response.map((date) => ({ date: date.date, cases: date.cases, deaths: date.deaths }))
     });
 };
 
@@ -14,7 +14,7 @@ export const getMarginalDataUSA = () => async (dispatch) => {
     const response = await (await fetch(`${serverUri}/api/marginalDataUSA`)).json();
     dispatch({
         type: GET_MARGINAL_DATA_USA,
-        payload: response.splice(70, response.length).map((date) => ({ date: date.date, cases: date.cases, deaths: date.deaths }))
+        payload: response.map((date) => ({ date: date.date, cases: date.cases, deaths: date.deaths }))
     });
 };
 
@@ -40,7 +40,7 @@ export const getTotalStateData = (state) => async (dispatch) => {
         type: GET_TOTAL_STATE_DATA,
         payload: {
             stateName: state,
-            data: response.splice(21, response.length).map((date) => ({ date: date.date, cases: date.cases, deaths: date.deaths }))
+            data: response.map((date) => ({ date: date.date, cases: date.cases, deaths: date.deaths }))
         }
     });
 };
@@ -51,7 +51,7 @@ export const getMarginalStateData = (state) => async (dispatch) => {
         type: GET_MARGINAL_STATE_DATA,
         payload: {
             stateName: state,
-            data: response.splice(21, response.length).map((date) => ({ date: date.date, cases: date.cases, deaths: date.deaths }))
+            data: response.map((date) => ({ date: date.date, cases: date.cases, deaths: date.deaths }))
         }
     });
 };

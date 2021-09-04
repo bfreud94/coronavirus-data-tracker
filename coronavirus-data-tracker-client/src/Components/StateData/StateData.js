@@ -55,8 +55,10 @@ class StateData extends Component {
 
     minimizeDataSet = (data) => {
         if (data.length === 0) return data;
-        return data.filter((date, index) => index % 30 === 0).map((dataForDate) => ({...dataForDate, date: moment(dataForDate.date).format('MM-DD-YYYY')}));
+        return data.filter((date, index) => index % 30 === 0).map((dataForDate) => ({...dataForDate, date: this.parseDate(moment(dataForDate.date).format('MM-DD-YYYY'))}));
     };
+    
+    parseDate = (date) => date.substring(0, 6) + date.substring(8, 10)
 
     resetPageCounter = () => {
         this.setState({

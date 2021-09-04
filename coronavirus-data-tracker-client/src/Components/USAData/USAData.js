@@ -31,7 +31,9 @@ class USAData extends Component {
         if (title.includes('Marginal') && (Object.keys(marginalStatesDataForDate).length === 0 || marginalStatesDataForDate[date].length === 0)) this.props.getMarginalStatesDataForDate(date);
     }
 
-    minimizeDataSet = (data) => data.filter(({ date }) => date.substring(3, 5) === '01');
+    minimizeDataSet = (data) => data.filter(({ date }) => date.substring(3, 5) === '01').splice(1).map(item => ({ ...item, date: this.parseDate(item.date) }));
+    
+    parseDate = (date) => date.substring(0, 6) + date.substring(8, 10)
 
     onHeaderButtonClick = (e) => {
         this.setState({
@@ -63,8 +65,7 @@ class USAData extends Component {
         const { title } = this.props;
         const { totalStatesDataIsVisible } = this.state;
         const data = this.getData();
-        const tableData = [...data].sort((a, b) =>
-            moment(a.date, 'MM-DD-YYYY').diff(moment(b.date, 'MM-DD-YYYY'), 'days') > 0 ? -1 : 1);
+        const tableData = [...data].sort((a, b) => moment(a.date, 'MM-DD-YYYY').diff(moment(b.date, 'MM-DD-YYYY'), 'days') > 0 ? -1 : 1);
         const dateData = this.getDataForSpecificDate();
         return (
             <React.Fragment>
