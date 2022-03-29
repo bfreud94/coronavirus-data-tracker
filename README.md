@@ -1,1 +1,2 @@
-Please reach out to me at bfreud94@gmail.com if you have any questions
+# Coronavirus Data Tracker
+Web solution to view the latest Coronavirus Data
