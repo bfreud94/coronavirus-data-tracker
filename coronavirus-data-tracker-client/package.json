@@ -18,7 +18,7 @@
     "d3-shape": "^2.0.0",
     "date-fns": "^2.13.0",
     "lodash": "^4.17.21",
-    "mdbreact": "^4.27.0",
+    "mdbreact": "^5.2.0",
     "moment": "^2.29.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
